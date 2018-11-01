@@ -1,0 +1,268 @@
+<html>
+<title>Hack@nitj</title>
+<link href="Homepage.css" rel="stylesheet">
+<script type="text/javascript" src="Homepage.js"></script>
+
+	<body style="margin: 0px;padding: 0px;">
+		
+		<!-- NavBar -->
+		<nav class="navbarBody">
+			<ul class="listBody">
+				
+				<li class="list">
+					<button class="navbarButton">
+						<img src="Images/home1.png" class="navBarIcon">
+						<br>
+						Home
+					</button>
+				</li>
+
+				<li class="list">
+					<button class="navbarButton">
+						<img src="Images/message1.png" class="navBarIcon">
+						<br>
+						Messages
+					</button>
+				</li>
+				<li class="list">
+					<button class="navbarButton">
+						<img src="Images/notification1.png" class="navBarIcon">
+						<br>
+						Notifications
+					</button>
+				</li>
+			</ul>
+			<!--NavBar Right Section -->
+			<div class="navBarRight">
+				<!-- Profile Icon -->
+				
+				<!-- Profile Icon ends -->
+				<button class="navBarUsername">
+					Harry Chhabra
+				</button>
+				<button class="logoutButton">
+					Logout
+				</button>
+			</div>	
+			<!-- NavBar Right Section ends -->
+		</nav>
+
+		<!-- NavBar ends -->
+
+		<!-- Left Section -->
+		<div class="left">
+			<!-- Search Bar -->
+				<div class="searchBarBlock">
+					<br>
+					<input type="text" placeholder="Enter Something" style="width:100%" id="searchInput" value="saf">
+					<button style="width:100%;" onclick="search()">
+						Search
+					</button>
+					<br>
+					<br>
+				</div>
+			<!-- Search Bar ends -->
+			<!-- Profile Card -->
+			<div class="profileBlock">
+				<br>
+				<center>
+					<div class="profileImageBlock">
+						<img src="Images/profile1.png" class="profileImage">
+					</div>
+					<br>
+					<table style="border:0px solid black;width:100%;text-align: center;">
+						<tr>
+							<td>
+								Harry Chhabra
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Detail 1
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Detail 2
+							</td>
+						</tr>
+					</table>
+				</center>
+			</div>
+			<!-- Profile Card end -->
+			<br>
+			<hr>
+			<!-- Other Contents -->
+			<div class="leftContentsBlock">
+				<ul style="list-style-type: none;padding-left: 0px;">
+					<li class="leftContent">
+						<span onclick="replacementShow()">Internships</span>
+					</li>
+					<li class="leftContent">
+						Scholarship
+					</li>
+					<li class="leftContent">
+						Programmes
+					</li>
+					<li class="leftContent">
+						Interest
+					</li>
+				</ul>
+			</div>
+			<!-- Other Contents ends -->
+
+			<!-- Search Result Block -->
+			<div class="searchResults">
+				<button style="width:100%;height:auto;border:1px solid black;" onclick="searchHide()">
+					Back
+				</button>
+				<div class="searchResultsContent">
+					
+				</div>
+			</div>
+			<!-- Search Result Block ends -->
+
+			<!-- Activity Block -->
+			
+			<!-- Activity Block ends -->
+		</div>
+		<!-- Left Section Ends -->
+
+		<!-- Middle Section -->
+		<div class="middle">
+			
+		</div>
+		<!-- Middle Section ends -->
+
+		<!-- Right Section -->
+		<div class="right">
+			<!-- Notifications -->
+				<div class="notificationTab">
+					Notifications
+					<span id="notificationShow" onclick="notificationShow()" style="float:right;display:none;">show</span>
+					<span id="notificationHide" onclick="notificationHide()" style="float:right">hide</span>
+				</div>
+				
+				<div class="notificationBlock">
+					<ul>
+						<li>
+							Notification 1
+						</li>
+						<li>
+							Notification 2
+						</li>
+						<li>
+							Notification 3
+						</li>
+						<li>
+							Notification 4
+						</li>
+						<li>
+							Notification 5
+						</li>
+						<li>
+							Notification 6
+						</li>
+						<li>
+							Notification 7
+						</li>
+						<li>
+							Notification 8
+						</li>
+						<li>
+							Notification 9
+						</li>
+						<li>
+							Notification 10
+						</li>
+						<li>
+							Notification 11
+						</li>
+						<li>
+							Notification 12
+						</li>
+						<li>
+							Notification 13
+						</li>
+						<li>
+							Notification 14
+						</li>
+						<li>
+							Notification 15
+						</li>
+					</ul>
+				</div>
+			<!-- Notifications Ends -->
+
+			<!-- Messages -->
+				<div class="messagesTab">
+					Messages
+					<span id="messagesShow" onclick="messagesShow()" style="float:right">show</span>
+					<span id="messagesHide" onclick="messagesHide()" style="display:none;float:right">hide</span>
+				</div>
+
+				<div class="messagesBlock" style="display:none">
+					<ul>
+						<li>
+							Contact 1
+						</li>
+						<li>
+							Contact 2
+						</li>
+						<li>
+							Contact 3
+						</li>
+						<li>
+							Contact 4
+						</li>
+						<li>
+							Contact 5
+						</li>
+						<li>
+							Contact 6
+						</li>
+						<li>
+							Contact 7
+						</li>
+						<li>
+							Contact 8
+						</li>
+						<li>
+							Contact 9
+						</li>
+						<li>
+							Contact 10
+						</li>
+						<li>
+							Contact 11
+						</li>
+						<li>
+							Contact 12
+						</li>
+						<li>
+							Contact 13
+						</li>
+						<li>
+							Contact 14
+						</li>
+						<li>
+							Contact 15
+						</li>
+					</ul>
+				</div>
+			<!-- Messages Ends -->
+		</div>
+		<!-- Right Section ends -->
+
+		<!-- Right Section Replacement -->
+		<div class="replacementSection">
+			<div style="width:100%;height:auto;box-sizing: border-box;border:1px solid black;" onclick="replacementHide()">
+				Back
+			</div>
+			Replacement Section being shown
+
+		</div>
+		<!-- Right Section Replacement ends -->
+	</body>
+
+</html>

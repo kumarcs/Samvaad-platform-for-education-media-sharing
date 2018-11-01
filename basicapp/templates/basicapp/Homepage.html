@@ -1,0 +1,264 @@
+<html>
+<title>Hack@nitj</title>
+<link href="Homepage.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="bootstrap.css" rel="stylesheet">
+<link href="bootstrap-grid.min.css" rel="stylesheet">
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="Homepage.js"></script>
+
+	<body style="background-color: WhiteSmoke;padding:0px;">
+		
+		<!-- NavBar -->
+		<nav class="navbarBody">
+			<ul class="listBody">
+				<li class="list">
+				</li>
+				<li class="list">
+					<button class="navbarButton">
+						<img src="Images/Home1.jpg" class="navBarIcon">
+						<br>
+						Home
+					</button>
+				</li>
+
+				<li class="list">
+					<button class="navbarButton" onclick="loadMessages()">
+						<img src="Images/message1.png" class="navBarIcon">
+						<br>
+						Messages
+					</button>
+				</li>
+				<li class="list">
+					<button class="navbarButton">
+						<img src="Images/notification1.png" class="navBarIcon">
+						<br>
+						Notifications
+					</button>
+				</li>
+			</ul>
+			<!--NavBar Right Section -->
+			<div class="navBarRight">
+				<!-- Profile Icon -->
+				
+				<!-- Profile Icon ends -->
+				<button class="navBarAccount">
+					Account
+				</button>
+				<button class="navBarlogoutButton">
+					Logout
+				</button>
+			</div>	
+			<!-- NavBar Right Section ends -->
+		</nav>
+
+		<!-- NavBar ends -->
+
+		<!-- Container (Envelope) -->
+		<div class="myContainer">
+			<!-- Left Section -->
+		<div class="left">
+			<!-- Profile Card -->
+			<br>
+			<center>
+			<div class="profileBlock">
+
+				<!-- Blue Color -->
+				<div style="width:100%;height:70px;background-color: lightblue;">
+					
+				</div>
+				<!-- Blue Color ends -->
+				<center>
+					<div class="profileImageBlock">
+						<img src="Images/dp.jpg" class="profileImage">
+					</div>
+					<br>
+					<div class="profileBlockUsername">
+						Harry Chhabra
+					</div>
+					<div class="profileBlockInstituteName">
+						Student at Dr. B.R. Ambedkar National Institute of Technology, Jalandhar
+					</div>
+					<hr>
+					<div class="profileBlockOtherDetails">
+						harrychhabra1998@gmail.com
+					</div>
+				</center>
+			</div>
+			<!-- Profile Card end -->
+		</center>
+			<hr>
+			<!-- Other Contents -->
+			<center>
+			<div class="leftContentsBlock">
+				<ul style="list-style-type: none;padding-left: 0px;border:1px solid black;">
+					<li class="leftContent">
+						Internships
+					</li>
+					<li class="leftContent">
+						Scholarship
+					</li>
+					<li class="leftContent">
+						Programmes
+					</li>
+					<li class="leftContent">
+						Interest
+					</li>
+				</ul>
+			</div>
+		</center>
+			<!-- Other Contents ends -->
+		</div>
+		<!-- Left Section Ends -->
+
+		<!-- Middle Section -->
+		<div class="middle">
+			<ul style="list-style-type: none;padding-left: 0px;padding:2px;">
+				<br>
+				<!-- NewsFeed Update -->
+				<li>
+					<div style="width:100%;padding:5px;border: 0px solid black;background-color: white;box-shadow: 1px 1px 2px 2px;">
+						<br>
+						 <textarea placeholder="Describe yourself here..." style="width:100%;padding-top:10px;font-weight: bold;border: 0px solid black;padding-bottom: 0px;margin:0px;font-family: Patrick Hand;height:50px;"></textarea> 
+						<hr>
+						<button class="newsfeedUpdateImage">
+							<b>Image</b>
+						</button>
+						<button class="newsfeedUpdateImage">
+							<b>Update</b>
+						</button>
+
+					</div>
+					<br>
+				</li>
+				<!-- NewsFeed Update ends -->
+				<li>
+					<div class="newsfeedContent">
+						<div class="contentHeader">
+							<!-- Profile Pic, username, Institue name -->
+							<div class="newsfeedUserDetail">
+								<div class="newsfeedUploadedByImage">
+									<img src="Images/nitishkumar.jpeg" style="width:70px;height: 70px;">
+								</div>
+								<span class="newsfeedUploadedBy">
+									Nitish Kumar
+								</span>
+								<br>
+								<span class="newsfeedUploadedByInstituteName">
+									Dr. B.R. Ambedkar National Institute of Technology
+								</span>
+								<br>
+								<span class="newsfeedContentUploadDate">
+									27 Oct, 11:01 PM
+								</span>
+							</div>
+
+							
+						</div>
+						<br>
+
+						<!-- Uploaded Image -->
+						<div class="newsfeedUploadedImageBlock">
+							<img src="Images/back6.jpg" class="newsfeedUploadedImage">
+						</div>
+						<!-- Uploaded Image ends -->
+						<br><br>
+						<!-- Caption -->
+						<div class="newsfeedContentCaptionBlock">
+<pre class="newsfeedContentCaption">
+1st National Conference on RECENT RESEARCH AND INNOVATION TRENDS IN ENGINEERING, SCIENCES AND MANAGEMENT<br />
+(RRITESM-18)<br />
+DATE: 2nd November, 2018
+</pre>
+						</div>
+						<br>
+						<br>
+						<!-- Caption ends -->
+						<div class="contentFooter">
+							Something can be written here
+						</div>
+					</div>
+				</li>
+				
+			</ul>
+			<!-- Load More -->
+			<div class="loadMoreBlock">
+				Load more stories
+			</div>
+			<!-- Load More ends -->
+		</div>
+		<!-- Middle Section ends -->
+
+		<!-- Right Section -->
+		<div class="right">
+			<br>
+			<div class="rightContent">
+				<!-- Search Bar -->
+			<div class="rightSearchBlock">
+				<input type="text" placeholder="Search Username" id="rightSearchBlockInputId" class="rightSearchBlockInput">
+				<button class="rightSearchBlockButton">
+					<img src="Images/search1.png" style="width:100%;height: 100%;">
+				</button>
+			</div>
+			<br><br>
+			<!-- Search bar ends -->
+			<!-- Notification Block -->
+			<div class="rightNotificationBlock" style="display:none;">
+				<div class="rightNotificationBlockHeader">
+					Notifications:
+				</div>
+				<ul style="list-style-type: none;padding-left: 2px;height: 100%;overflow: scroll">
+					<li class="notificationBlockLi">
+						<span class="notificationBlockUploadBy">Nitish Kumar</span> posted of Machine Learing</span> interest.
+					</li>
+					<li class="notificationBlockLi">
+						<span class="notificationBlockUploadBy">Nitish Kumar</span> posted of Machine Learing</span> interest.
+					</li>
+					<li class="notificationBlockLi">
+						<span class="notificationBlockUploadBy">Nitish Kumar</span> posted of Machine Learing</span> interest.
+					</li>
+					<li class="notificationBlockLi">
+						<span class="notificationBlockUploadBy">Nitish Kumar</span> posted of Machine Learing</span> interest.
+					</li>
+					<li class="notificationBlockLi">
+						<span class="notificationBlockUploadBy">Nitish Kumar</span> posted of Machine Learing</span> interest.
+					</li>
+					<li class="notificationBlockLi">
+						<span class="notificationBlockUploadBy">Nitish Kumar</span> posted of Machine Learing</span> interest.
+					</li>
+					<li class="notificationBlockLi">
+						<span class="notificationBlockUploadBy">Nitish Kumar</span> posted of Machine Learing</span> interest.
+					</li>
+					<li class="notificationBlockLi">
+						<span class="notificationBlockUploadBy">Nitish Kumar</span> posted of Machine Learing</span> interest.
+					</li>
+					<li class="notificationBlockLi">
+						<span class="notificationBlockUploadBy">Nitish Kumar</span> posted of Machine Learing</span> interest.
+					</li>
+					<li class="notificationBlockLi">
+						<span class="notificationBlockUploadBy">Nitish Kumar</span> posted of Machine Learing</span> interest.
+					</li>
+				</ul>
+			</div>
+			<!-- Notification Block ends -->
+			</div>
+		</div>
+		<!-- Right Section ends -->
+
+		<!-- Right Section Overlapping 1 -->
+		<div class="overlappingBlock">
+			<div class="overlappingBlockContent" style="display:none;">
+				<div class="overlappingBlockHeader" onclick="closeMessages()">
+					Back
+				</div>
+			</div>
+
+		</div>
+		<!-- Right Section Overlapping 1 ends -->
+		</div>
+		<!-- Container (Envelope) ends -->
+		
+	</body>
+
+</html>

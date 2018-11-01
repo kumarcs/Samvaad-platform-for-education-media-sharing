@@ -1,0 +1,28 @@
+.navBarBody{
+	width:100%;
+	border:1px solid black;
+	height:10%;
+}
+
+
+
+/*Left Section*/
+.leftBody{
+	width:25%;
+	height:90%;
+	border:1px solid black;
+	display: inline-block;
+	box-sizing: border-box;
+}
+
+/*Left Section ends*/
+
+/*Middle Section*/
+.middleBody{
+	width:50%;
+	height:90%;
+	border:1px solid black;
+	display: inline-block;
+	box-sizing: border-box;
+}
+/*Middle Section ends*/
