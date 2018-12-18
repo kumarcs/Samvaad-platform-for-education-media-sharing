@@ -1,0 +1,191 @@
+{% load staticfiles %}
+
+<html>
+<title>User Homepage</title>
+<link href="{% static 'css/addnewsfeed.css' %}" rel="stylesheet">
+<link href="{%static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap-grid.min.css' %}" rel="stylesheet">
+<script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/Homepage.js' %}"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<body style="background-color: WhiteSmoke;padding:0px;margin:0px;width:100%;">
+
+		<!-- NavBar -->
+		<nav class="navbarBody">
+			<ul class="listBody">
+        <li class="list" style="width:auto;padding-right:20%;">
+          <span style="color: white;font-size:3em;">SANVAD</span>
+          <!-- <span style="padding-right:30%;display:inline-block;border:1px solid red"></span> -->
+        </li>
+				<li class="list">
+					<a href="{% url 'basicapp:index' %}"><button class="navbarButton">
+						<img src="{% static 'Images/home3.png' %}" class="navBarIcon">
+						<br>
+						Home
+					</button></a>
+				</li>
+
+				<li class="list">
+					<button class="navbarButton" onclick="loadRightVerticalNavbar()">
+						<img src="{% static 'Images/message1.png' %}" class="navBarIcon">
+						<br>
+						Messages
+					</button>
+				</li>
+				<li class="list">
+					<button class="navbarButton" onclick="loadRightVerticalNavbar()">
+						<img src="{% static 'Images/notification1.png' %}" class="navBarIcon">
+						<br>
+						Notifications
+					</button>
+				</li>
+        </ul>
+        <ul class="listBody" style="border:0px solid red;width:24%;height:auto;margin:0px;padding:0px;">
+        <li class="list" style="float:right;height:100%">
+          <a href="{% url 'basicapp:accountInfo' %}">
+            <button class="navBarAccount">
+            Account
+          </button></a>
+        </li>
+        <li class="list" style="float:right">
+          <a href="http://127.0.0.1:8000/"><button class="navBarlogoutButton">
+            Logout
+          </button></a>
+        </li>
+          <!--NavBar Right Section -->
+    			<!-- <div class="navBarRight"> -->
+
+
+    			<!-- </div> -->
+    			<!-- NavBar Right Section ends -->
+        <!-- </li> -->
+      </ul>
+		</nav>
+
+		<!-- NavBar ends -->
+
+		<!-- Container (Envelope) -->
+		<div class="myContainer">
+			<!-- Left Section -->
+		<div class="left">
+			<!-- Profile Card -->
+			<br>
+      <br>
+			<center>
+			<div class="profileBlock">
+
+				<!-- Blue Color -->
+				<div style="width:100%;height:25%;background-color: lightblue;">
+
+				</div>
+				<!-- Blue Color ends -->
+				<center>
+					<div class="profileImageBlock">
+						<!-- <img src="{{ user.profile_pic_path.url }}" class="profileImage"> -->
+						<img src="{% static 'Images/maleIcon.png' %}" class="profileImage">
+					</div>
+					<div class="profileBlockUsername">
+						{% for user in user_record %}
+              {{ user.first_name }} {{user.last_name}}
+					</div>
+          <br>
+					<div class="profileBlockInstituteName">
+            <table class="profileBlockInstituteName">
+              <tr>
+                <!-- <td>Student&nbsp;at:</td> -->
+                <td><b>{{ user.institute_name_user }}</b></td>
+              </tr>
+            </table>
+					</div>
+          <br>
+					<hr>
+
+					<div class="profileBlockOtherDetails">
+  					  {{ user.user_name }}
+            {% endfor %}
+					</div>
+				</center>
+			</div>
+			<!-- Profile Card end -->
+		</center>
+    <br>
+    <br>
+			<!-- Other Contents -->
+			<center>
+			<div class="leftContentsBlock">
+				<ul style="list-style-type: none;padding-left: 0px;border:0px solid black;">
+					<a href="UserExtras.html"><li class="leftContent">
+						<button class="leftContent" style="width:100%;">Internships</button>
+					</li></a>
+					<a href="UserExtras.html"><li class="leftContent">
+						<button class="leftContent" style="width:100%;">Scholarship</button>
+					</li></a>
+					<a href="UserExtras.html"><li class="leftContent">
+						<button class="leftContent" style="width:100%;">Programmes</button>
+					</li></a>
+				</ul>
+			</div>
+		</center>
+			<!-- Other Contents ends -->
+		</div>
+		<!-- Left Section Ends -->
+
+		<!-- Middle Section -->
+		<div class="middle">
+			<ul style="list-style-type: none;padding-left: 0px;padding:2px;">
+				<br>
+				<!-- NewsFeed Update -->
+				<li>
+					<div style="width:100%;padding:15px;border: 0px solid black;background-color: white;box-shadow: 0px 0px 0px 0px;">
+            <form method="POST">
+              {% csrf_token %}
+              {{ add_news_feed_form.as_p }}
+              <input type="submit" value="addnewsfeed">
+            </form>
+					</div>
+					<br>
+				</li>
+
+			</ul>
+		</div>
+		<!-- Middle Section ends -->
+
+		<!-- Right Section -->
+		<div class="right">
+			<br>
+      <br>
+			<div class="rightContent">
+				<!-- Search Bar -->
+			<div class="rightSearchBlock">
+				<input type="text" placeholder="Search Username" id="rightSearchBlockInputId" class="rightSearchBlockInput">
+				<button class="rightSearchBlockButton">
+					<img src="{% static 'Images/search1.png' %}" style="width:100%;height: 100%;">
+				</button>
+			</div>
+			<br><br>
+			<!-- Search bar ends -->
+
+			
+			</div>
+		</div>
+		<!-- Right Section ends -->
+
+		<!-- Right Section Overlapping 1 -->
+		<div class="overlappingBlock">
+			<div class="overlappingBlockContent" style="display:none;">
+				<div class="overlappingBlockHeader" onclick="closeRightVerticalNavbar()">
+					Back
+				</div>
+
+			</div>
+
+		</div>
+		<!-- Right Section Overlapping 1 ends -->
+		</div>
+		<!-- Container (Envelope) ends -->
+
+	</body>
+
+</html>

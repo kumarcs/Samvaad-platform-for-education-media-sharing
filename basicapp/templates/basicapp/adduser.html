@@ -1,0 +1,15 @@
+{% extends "basicapp/base.html" %}
+  {% block body_block %}
+  {% load staticfiles %}
+<div class="jumbotron">
+  <form method="POST">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+    {{ add_user_form.as_p }}
+    <input type="submit" value="adduser">
+  </form>
+</div>
+
+
+
+  {% endblock %}

@@ -1,19 +1,55 @@
-{% extends 'basicapp/base.html' %}
-{% block body_block %}
+<!-- <!DOCTYPE html> -->
+{% load staticfiles %}
+<html>
+<title>
+  Login Page
+</title
 
-<div class="jumbotron">
-  <h1>Please Login</h1>
-  <form class="" action="{% url 'basicapp:login' %}" method="POST">
+<link href="https://fonts.googleapis.com/css?family=Sofia" rel="stylesheet">
 
-    <label for="username"> User Name:</label>
-    <input type="text" name="username" placeholder="Enter username">
+<link href="{% static '/css/LoginPage.css' %}" rel="stylesheet">
+<script src="{% static '/js/LoginPage.js' %}" type="text/javascript"></script>
+<body style="padding:0px;margin: 0px;box-sizing: border-box;overflow: hidden">
+  <!-- NavBar -->
+  <nav class="navbarBody" style="padding:0px;text-align:left;">
+    <br>
+    <span style="color: white;font-size: 2.5em;">SANVAD</span>
+  </nav>
 
-    <label for="password">Password:</label>
-    <input type="password" name="password">
+  <!-- NavBar ends -->
+  <!-- Middle Section -->
+  <div class="middle">
 
-    <input type="submit" name="" value="Login">
-  </form>
-</div>
+    <div class="middleEnvelope">
+      <!-- Login Box -->
+      <form action="{% url 'basicapp:login' %}" method="POST">
+        <div class="loginBox">
+          <span style="font-size: 2em;font-family:Sofia">Login</span>
+          <hr>
+          <br>
+          <input type="text" placeholder="Enter Username" name="username" id="username" class="loginInput">
+          <br>
+          <br>
+          <input type="password" placeholder="Enter Password" name="password" id="password" class="loginInput">
+          <br><br>
+          <input type="submit" value="LOGIN"  class="loginButton">
+          <br>
+          <br>
+          <hr>
 
-
-{% endblock %}
+        </div>
+      </form>
+      <!-- Login Box ends -->
+    </div>
+  </div>
+  <!-- Middle Section ends -->
+  <!-- Footer  -->
+  <div class="footer">
+    <br>
+    <center>
+      Developed by: <b>TEAM TRIANGULATION</b>
+    </center>
+  </div>
+  <!-- Footer ends -->
+</body>
+</html>

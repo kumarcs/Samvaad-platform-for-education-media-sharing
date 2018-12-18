@@ -1,0 +1,150 @@
+{% load staticfiles %}
+<html>
+<title>Institute Extra</title>
+<link href="{% static 'css/InstituteExtra.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap-grid.min.css' %}" rel="stylesheet">
+<script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/InstituteExtra.js' %}"></script>
+
+	<body style="background-color: WhiteSmoke;padding:0px;margin:0px;">
+
+		<!-- NavBar -->
+		<nav class="navbarBody">
+			<span style="color: white;">SANVAD</span>
+			<ul class="listBody">
+				<li class="list">
+					<a href="InstituteAdmin.html"><button class="navbarButton">
+						<img src="{% static 'Images/home3.png' %}" class="navBarIcon">
+						<br>
+						Home
+					</button></a>
+				</li>
+
+			</ul>
+			<!--NavBar Right Section -->
+			<div class="navBarRight">
+				<!-- Profile Icon -->
+
+				<!-- Profile Icon ends -->
+				<a href="{% url 'basicapp:InstituteProfilePage' %}"><button class="navBarAccount">
+					Account
+				</button></a>
+				<a href="{% url 'logout' %}"><button class="navBarlogoutButton">
+					Logout
+				</button></a>
+			</div>
+			<!-- NavBar Right Section ends -->
+		</nav>
+
+		<!-- NavBar ends -->
+		<!-- Container (Envelope) -->
+		<div class="myContainer">
+			<!-- Left Section -->
+			<br>
+		<div class="left" style="background-color:black;margin-left:0px;">
+			<!-- Profile Card -->
+			<br>
+			<center>
+			<div class="profileBlock">
+
+				<!-- Blue Color -->
+				<div style="width:100%;height:70px;background-color: lightblue;">
+
+				</div>
+				<!-- Blue Color ends -->
+				<center>
+					<div class="profileImageBlock">
+						<img src="{% static 'Images/dp.jpg' %}" class="profileImage">
+					</div>
+					<br>
+					<div class="profileBlockUsername">
+						Dr. B.R. Ambedkar National Institute of Technology
+					</div>
+					<div class="profileBlockInstituteName">
+						Director: Nitish Kumar
+					</div>
+					<hr>
+					<div class="profileBlockOtherDetails">
+						director@nitj.ac.in
+					</div>
+				</center>
+			</div>
+			<!-- Profile Card end -->
+		</center>
+			<hr>
+			<br>
+			<!-- Other Contents -->
+			<center>
+			<div class="leftContentsBlock">
+				<ul style="list-style-type: none;padding-left: 0px;border:1px solid black;">
+					<li class="leftContent">
+						Internships
+					</li>
+					<li class="leftContent">
+						Scholarship
+					</li>
+					<li class="leftContent">
+						Programmes
+					</li>
+					<a href="{% url 'basicapp:InstituteSocities' %}"><li class="leftContent">
+						Socities
+					</li></a>
+				</ul>
+			</div>
+		</center>
+			<!-- Other Contents ends -->
+		</div>
+		<!-- Left Section Ends -->
+
+		<!-- Middle Section -->
+		<div class="middle">
+			<ul style="list-style-type: none;padding-left: 0px;padding:2px;">
+				<br>
+				<!-- NewsFeed Update -->
+				<li>
+					<div style="width:100%;padding:5px;border: 0px solid black;background-color: white;box-shadow: 0px 0px 0px 0px;">
+				Schoolarship, Internship will be shown here.
+				{% for feed in feed %}
+
+				<h4>{{ feed.user_name }}</h4>
+				<p>{{ feed.date }}</p>
+				<p>{{ feed.description }}</p>
+				<hr>
+				{% empty %}
+				<p>No posts there</p>
+				{% endfor %}
+					</div>
+					<br>
+				</li>
+				<!-- NewsFeed Update ends -->
+			</ul>
+		</div>
+		<!-- Middle Section ends -->
+
+		<!-- Right Section -->
+		<div class="right">
+			<br>
+			<div class="rightContent">
+				<!-- Search Bar -->
+			<div class="rightSearchBlock">
+				<input type="text" placeholder="Search Username" id="rightSearchBlockInputId" class="rightSearchBlockInput">
+				<button class="rightSearchBlockButton">
+					<img src="{% static 'Images/search1.png' %}" style="width:100%;height: 100%;">
+				</button>
+			</div>
+			<br><br>
+			<!-- Search bar ends -->
+
+			</div>
+		</div>
+		<!-- Right Section ends -->
+
+		</div>
+		<!-- Container (Envelope) ends -->
+
+	</body>
+
+</html>

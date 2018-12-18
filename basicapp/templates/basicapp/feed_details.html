@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <p>{{ newsfeed_detail.number }}</p>
+    <p>{{ newsfeed_detail.user_name}} </p>
+    <p> {{ newsfeed_detail.interest }}</p>
+    <p> {{ newsfeed_detail.date }} </p>
+    <p> {{ newsfeed_detail.description }} </p>
+
+    <a href="{% url 'add_comment_to_post' pk=newsfeed_detail.pk %}"> Add comment </a>
+
+    {% for comment in newsfeed_detail.comments.all %}
+    <div class="comment">
+      <div class="date">
+        <strong>{{ comment.user_name }}</strong>
+        <p>{{ comment.description | linebreaks }}</p>
+      </div>
+    </div>
+    {% empty %}
+    <p>No comments here yet :</p>
+    {% endfor %}
+
+  </body>
+</html>

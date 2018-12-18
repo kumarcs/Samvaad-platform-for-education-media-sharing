@@ -25,4 +25,11 @@ urlpatterns = [
     path('logout/', views.user_logout, name='logout'),
     path('superAdmin/', views.superAdmin, name='superAdmin'),
     path('instituteAdmin/', views.instituteAdmin, name='instituteAdmin'),
+    path('register/', views.superAdmin, name='registerInstituteAdmin'),
+    path('instituteAdmin/adduser/', views.addUser, name='adduser'),
+    path('index/addNewsFeed/', views.index, name='addnewsfeed'),
+    path('index/<int:pk>/', views.NewsFeedDetail.as_view(),name ='detail'),
+    path('accountInfo/', views.userAccountInfo, name='accountInfo'),
+    path('index/<int:pk>/comment/', views.add_comment_to_post, name = 'add_comment_to_post'),
+
 ]

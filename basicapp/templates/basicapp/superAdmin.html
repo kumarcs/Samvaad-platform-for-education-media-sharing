@@ -1,11 +1,109 @@
-{% extends "basicapp/base.html" %}
-  {% block body_block %}
-  {% load staticfiles %}
 
-    <a href="{% url 'admin:index' %}"> admin_link </a>
-    <h1>Homepage Super Admin</h1>
+{% load staticfiles %}
+<html>
+<title>
+	Super Admin
+</title>
+	<link href="{% static 'css/superAdminHomepage.css' %}" rel="stylesheet">
+	<script src="{% static 'js/superAdminHomepage.js' %}" type="text/javascript"></script>
+<body style="margin: 0px;background-color: WhiteSmoke">
+	<!-- NavBar -->
+		<nav class="navbarBody">
+			<span style="color: white;font-size: 2em;">SANVAD</span>
+			<!--NavBar Right Section -->
+			<div class="navBarRight">
+				<button class="navBarlogoutButton">
+					<a href="http://127.0.0.1:8000/"><button class="navBarlogoutButton">
+						Logout
+					</button></a>
+				</button>
+			</div>
+			<!-- NavBar Right Section ends -->
+		</nav>
 
+		<!-- NavBar ends -->
+	<!-- Container -->
+	<div class="myContainer">
+		<!-- Left Section -->
+		<div class="leftBody">
+			<br>
+			<ul class="leftBodyUl">
+				<li class="leftBodyUlLi" onclick="loadAddInstitute()" style="background-color: lightgrey;">
+					Add Institute
+				</li>
+				<li class="leftBodyUlLi" onclick="loadModifyInstitute()">
+					Modify Institute
+				</li>
+				<li class="leftBodyUlLi" onclick="loadAllInstitute()">
+					View all Institutes
+				</li>
+				<li class="leftBodyUlLi" onclick="loadChangePassword()">
+					Change Password
+				</li>
+			</ul>
+		</div>
+		<!-- Left Section ends -->
+		<!-- Middle Section -->
+		<div class="middleBody">
+			<br><br>
+			<!-- Add Institute -->
+			<div class="addInstituteBlock">
+				<form method="POST">
+					{% csrf_token %}
+					{{ user_form.as_p }}
+					{{ profile_form.as_p }}
+					{{ institute_form.as_p }}
+					<input type="submit" value="registerInstituteAdmin">
+				</form>
 
+			</div>
+			<!-- Add Institute end -->
+			<!-- Modify Institute -->
+			<div class="modifyInstituteBlock">
+				<input type="text" placeholder="Institue Name">
+				<br>
+				<br>
+				<input type="text" placeholder="Institue Admin Username">
+				<br>
+				<br>
+				<input type="text" placeholder="Institue Admin Password">
+				<br>
+				<br>
+				<input type="button" value="Submit">
+			</div>
+			<!-- Modify Institute end -->
 
+			<!-- View all Institutes -->
+			<div class="allInstitutesBlock">
+				<ol>
+					<li>Institue 1</li>
+					<li>Institue 2</li>
+					<li>Institue 3</li>
+					<li>Institue 4</li>
+				</ol>
+			</div>
+			<!-- View all Institutes ends -->
 
-    {% endblock %}
+			<!-- Change Password -->
+			<div class="changePasswordBlock">
+				<input type="text" placeholder="Current Password">
+				<br><br>
+				<input type="text" placeholder="New Password">
+				<br><br>
+				<input type="button" value="Submit">
+			</div>
+			<!-- Change Password ends -->
+		</div>
+		<!-- Middle Section ends -->
+	</div>
+	<!-- Container ends -->
+	<!-- Footer  -->
+		<div class="footer">
+			<br>
+			<center>
+				Developed by: <b>TEAM TRIANGULATION</b>
+			</center>
+		</div>
+		<!-- Footer ends -->
+</body>
+</html>

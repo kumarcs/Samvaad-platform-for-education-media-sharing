@@ -1,0 +1,94 @@
+/*Navbar*/
+.navbarBody{
+  width:100%;
+  border:0px solid blue;
+  background-color: #212E4C;
+  box-sizing: border-box;
+  z-index: 1;
+  height: 7%;
+}
+
+
+.navBarlogoutButton{
+  height: 40px;
+  width: auto;
+  background-color: #ADFF2F;
+  display:inline-block;
+  border:0px solid white ;
+
+}
+
+.navBarRight{
+  display:inline-block;
+  float:right;
+}
+
+
+/*Navbar Ends*/
+
+.myContainer{
+	border:0px solid black;
+	height:500px;
+	width:82%;
+	margin-left:8%; 
+	position: relative;
+	background-color: inherit
+}
+.footer{
+	width:100%;
+	height:10%;
+	background-color: lightgrey;
+	border:0px solid red;
+	font-size: 0.8em;
+}
+
+/*Left Section*/
+.leftBody{
+	width:25%;
+	height:100%;
+	border:0px solid black;
+	display: inline-block;
+	box-sizing: border-box;
+	position: absolute;
+	top:0%;
+	left:0%;
+	background-color: white;
+}
+.leftBodyUl{
+	list-style-type: none;
+	padding-left: 0px;
+	border:0px solid black;
+	/*background-color: red;*/
+}
+.leftBodyUlLi{
+	/*font-size: 0.8em;*/
+	border:0px solid black;
+	padding:15px;
+}
+/*Left Section ends*/
+
+/*Middle Section*/
+.middleBody{
+	width:50%;
+	height:100%;
+	border:0px solid black;
+	display: inline-block;
+	box-sizing: border-box;
+	position: absolute;
+	left: 27%;
+	background-color: white
+}
+
+.addInstituteBlock{
+
+}
+.modifyInstituteBlock{
+	display: none;
+}
+.allInstitutesBlock{
+	display: none;
+}
+.changePasswordBlock{
+	display: none;
+}
+/*Middle Section ends*/

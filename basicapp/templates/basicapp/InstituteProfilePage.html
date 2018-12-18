@@ -1,0 +1,187 @@
+{% load staticfiles %}
+<html>
+<title>
+	Institue Profile Page
+</title>
+	<link href="{% static 'css/InstituteProfilePage.css' %}" rel="stylesheet">
+	<script src="{% static 'js/InstituteProfilePage.js' %}" type="text/javascript"></script>
+<body style="margin: 0px;background-color: WhiteSmoke">
+	<!-- NavBar -->
+		<nav class="navbarBody">
+			<span style="color: white;font-size: 2em;">SANVAD</span>
+			<ul class="listBody">
+				<li class="list">
+					<a href="{% url 'index' %}"><button class="navbarButton">
+						<img src="{% static 'Images/maleIcon.png' %}" class="navBarIcon">
+						<br>
+						Home
+					</button></a>
+				</li>
+
+			</ul>
+		</nav>
+
+		<!-- NavBar ends -->
+	<!-- Container -->
+	<div class="myContainer">
+		<!-- Left Section -->
+		<div class="leftBody">
+			<br>
+			<ul class="leftBodyUl">
+				<li class="leftBodyUlLi" onclick="loadInstitueProfile()" style="background-color: lightgrey;">
+					Instiute Profile
+				</li>
+				<hr>
+				<li class="leftBodyUlLi" onclick="loadAddInstitute()">
+					Add User
+				</li>
+				<li class="leftBodyUlLi" onclick="loadModifyInstitute()">
+					Modify Profile
+				</li>
+				<li class="leftBodyUlLi" onclick="loadAllInstitute()">
+					View all Users
+				</li>
+				<li class="leftBodyUlLi" onclick="loadChangePassword()">
+					Change Password
+				</li>
+			</ul>
+		</div>
+		<!-- Left Section ends -->
+		<!-- Middle Section -->
+		<div class="middleBody">
+			<br>
+			<hr>
+			<!-- Institute Profile -->
+			<div class="institueProfile" >
+				<table style="width:100%">
+					<tr>
+						<td style="font-size:1.4em;">Profile Pic:</td>
+						<td>
+							<img src="{% static 'Images/maleIcon.png' %}" style="width:100px;height:100px;">
+						</td>
+					</tr>
+					<tr>
+						<td style="font-size:1.4em;">Institute Name</td>
+						<td>| Dr. B.R. Ambedkar National Institute of Technology</td>
+					</tr>
+					<tr>
+						<td style="font-size:1.4em;">Institue Type</td>
+						<td>| NIT</td>
+					</tr>
+					<tr>
+						<td style="font-size:1.4em;">Director Name</td>
+						<td>| Nitish Kumar</td>
+					</tr>
+					<tr>
+						<td style="font-size:1.4em;">Description</td>
+						<td>| Blah Blah Blah</td>
+					</tr>
+				</table>
+			</div>
+			<!-- Institute Profile ends -->
+			<!-- Add Institute -->
+			<div class="addInstituteBlock">
+				<form>
+					<table style="border:0px solid black;width:80%">
+						<tr>
+							<td style="width:30%;font-family:Times New Roman;">User Name:</td>
+							<td><input type="text" placeholder="Username" style="width:100%;height:40px;"></td>
+						</tr>
+						<tr>
+							<td style="width:30%;font-family:Times New Roman;">Password:</td>
+							<td><input type="password" placeholder="Password" style="width:100%;height:40px;"></td>
+						</tr>
+						<tr>
+							<td style="width:30%;font-family:Times New Roman;">Institue Name:</td>
+							<td><input type="text" placeholder="Institue name" style="width:100%;height:40px;"></td>
+						</tr>
+					</table>
+					<br>
+					<br>
+								<input type="button" value="SUBMIT" style="height:40px;width:20%;background-color:green;border-radius:10px;">
+								<input type="reset" style="height:40px;width:20%;background-color:white;border-radius:10px;">
+				</form>
+			</div>
+			<!-- Add Institute end -->
+			<!-- Modify Institute -->
+			<div class="modifyInstituteBlock">
+				<form>
+				<table style="border:0px solid black;width:80%">
+					<tr>
+						<td style="width:30%;font-family:Times New Roman;">Institute Name:</td>
+						<td><input type="text" placeholder="Institute Name" style="width:100%;height:40px;"></td>
+					</tr>
+					<tr>
+						<td style="width:30%;font-family:Times New Roman;">Institute Type:</td>
+						<td><input type="text" placeholder="Institute type" style="width:100%;height:40px;"></td>
+					</tr>
+					<tr>
+						<td style="width:30%;font-family:Times New Roman;">Institute Profile Pic:</td>
+						<td><input type="file" accept="image/*" style="width:100%;height:40px;"></td>
+					</tr>
+					<tr>
+						<td style="width:30%;font-family:Times New Roman;">Director Name:</td>
+						<td><input type="text" placeholder="Director Name" style="width:100%;height:40px;"></td>
+					</tr>
+					<tr>
+						<td style="width:30%;font-family:Times New Roman;">Director Profile Pic:</td>
+						<td><input type="file" accept="image/*" style="width:100%;height:40px;"></td>
+					</tr>
+					<tr >
+						<td style="width:30%;font-family:Times New Roman;">Add description:</td>
+						<td>
+							<textarea style="width:100%;height:60px;"></textarea>
+						</td>
+					</tr>
+				</table>
+				<br><br>
+				<input type="button" value="SUBMIT" style="height:40px;width:20%;background-color:green;border-radius:10px;">
+				<input type="reset" style="height:40px;width:20%;background-color:white;border-radius:10px;">
+			</form>
+				</div>
+			<!-- Modify Institute end -->
+
+			<!-- View all Institutes -->
+			<div class="allInstitutesBlock">
+				<ol>
+					<li style="font-size:1.0em;">Institue 1</li>
+					<li style="font-size:1.0em;">Institue 2</li>
+					<li style="font-size:1.0em;">Institue 3</li>
+					<li style="font-size:1.0em;">Institue 4</li>
+				</ol>
+			</div>
+			<!-- View all Institutes ends -->
+
+			<!-- Change Password -->
+			<div class="changePasswordBlock">
+				<form>
+				<table>
+					<tr>
+						<td>Current Password:</td>
+						<td><input type="password" placeholder="Current Password"></td>
+					</tr>
+					<tr>
+						<td>New Password:</td>
+						<td><input type="password" placeholder="New Password"></td>
+					</tr>
+				</table>
+				<br><br>
+				<input type="button" value="SUBMIT" style="height:40px;width:20%;background-color:green;border-radius:10px;">
+				<input type="reset" style="height:40px;width:20%;background-color:white;border-radius:10px;">
+						</form>
+			</div>
+			<!-- Change Password ends -->
+		</div>
+		<!-- Middle Section ends -->
+	</div>
+	<!-- Container ends -->
+	<!-- Footer  -->
+		<div class="footer">
+			<br>
+			<center>
+				Developed by: <b>TEAM TRIANGULATION</b>
+			</center>
+		</div>
+		<!-- Footer ends -->
+</body>
+</html>

@@ -1,31 +1,74 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <title></title>
+    <link href="{% static '/css/Homepage.css' %}" rel="stylesheet">
+    <link href="{% static '/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static '/css/bootstrap.css' %} rel="stylesheet">
+    <link href="{% static '/css/bootstrap-grid.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/superAdminHomepage.css' %}" rel="stylesheet">
+	   <script src="{% static 'js/superAdminHomepage.js' %}" type="text/javascript"></script>
+    <script type="text/javascript" src="{% static '/js/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static '/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/js/Homepage.js' %}"></script>
+
+    <title>Samvad</title>
   </head>
   <body>
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <div class="navbar-header">
+    <nav class="navbarBody">
+			<ul class="listBody">
+			{% if user.is_authenticated %}
+				<li class="list">
+					<button class="navbarButton">
+						<img src="Images/Home1.jpg" class="navBarIcon">
+						<br>
+						Home
+					</button>
+				</li>
 
-        </div>
-        <ul class="nav navbar-nav">
-          {% if user.is_authenticated %}
-            <li class="active"><a href="{% url 'logout' %}">Logout</a></li>
-          {% else %}
-            <li class="active"><a href="{% url 'basicapp:login' %}">Login</a></li>
-          {% endif %}
+				<li class="list">
+					<button class="navbarButton" onclick="loadMessages()">
+						<img src="Images/message1.png" class="navBarIcon">
+						<br>
+						Messages
+					</button>
+				</li>
+				<li class="list">
+					<button class="navbarButton">
+						<img src="Images/notification1.png" class="navBarIcon">
+						<br>
+						Notifications
+					</button>
+				</li>
+			</ul>
+			<!--NavBar Right Section -->
+			<div class="navBarRight">
+				<!-- Profile Icon -->
 
-        </ul>
-      </div>
-    </nav>
+				<!-- Profile Icon ends -->
+				<button class="navBarAccount">
+					Account
+				</button>
+        {% endif %}
 
-    <div class="container">
+        {% if user.is_authenticated %}
+				<button class="navBarlogoutButton"><a href="{% url 'logout' %}">
+					Logout
+				</a></button>
+        {% else %}
+        <button class="navBarlogoutButton"><a href="{% url 'basicapp:login' %}">
+          Login
+        </a></button>
+        {% endif %}
+			</div>
+			<!-- NavBar Right Section ends -->
+		</nav>
+
+
       {% block body_block %}
 
       {% endblock %}
-    </div>
   </body>
 </html>

@@ -1,0 +1,212 @@
+{% load staticfiles %}
+<html>
+<title>User Extras</title>
+<link href="{% static 'css/UserExtras.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap-grid.min.css' %}" rel="stylesheet">
+<script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/UserExtras.js' %}"></script>
+
+	<body style="background-color: WhiteSmoke;padding:0px;">
+
+		<!-- NavBar -->
+		<nav class="navbarBody">
+			<span style="color: white">SANVAD</span>
+			<ul class="listBody">
+				<li class="list">
+					<a href="{% url 'index' %}"><button class="navbarButton">
+						<img src="{% static 'Images/home3.png' %}" class="navBarIcon">
+						<br>
+						Home
+					</button></a>
+				</li>
+
+				<li class="list">
+					<button class="navbarButton" onclick="loadRightVerticalNavbar()">
+						<img src="{% static 'Images/message1.png' %}" class="navBarIcon">
+						<br>
+						Messages
+					</button>
+				</li>
+				<li class="list">
+					<button class="navbarButton" onclick="loadRightVerticalNavbar()">
+						<img src="{% static 'Images/notification1.png' %}" class="navBarIcon">
+						<br>
+						Notifications
+					</button>
+				</li>
+			</ul>
+			<!--NavBar Right Section -->
+			<div class="navBarRight">
+				<!-- Profile Icon -->
+
+				<!-- Profile Icon ends -->
+				<a href="{% url 'basicapp:accountInfo' %}"><button class="navBarAccount">
+					Account
+				</button></a>
+				<a href="{% url 'logout' %}"><button class="navBarlogoutButton">
+					Logout
+				</button></a>
+			</div>
+			<!-- NavBar Right Section ends -->
+		</nav>
+
+		<!-- NavBar ends -->
+
+		<!-- Container (Envelope) -->
+		<div class="myContainer">
+			<!-- Left Section -->
+		<div class="left" style="visibility:hidden">
+			<!-- Profile Card -->
+			<br>
+			<center>
+			<div class="profileBlock">
+
+				<!-- Blue Color -->
+				<div style="width:100%;height:70px;background-color: lightblue;">
+
+				</div>
+				<!-- Blue Color ends -->
+				<center>
+					<div class="profileImageBlock">
+						<img src="{% static 'Images/dp.jpg' %}" class="profileImage">
+					</div>
+					<br>
+					<div class="profileBlockUsername">
+						Harry Chhabra
+					</div>
+					<div class="profileBlockInstituteName">
+						Student at Dr. B.R. Ambedkar National Institute of Technology, Jalandhar
+					</div>
+					<hr>
+					<div class="profileBlockOtherDetails">
+						harrychhabra1998@gmail.com
+					</div>
+				</center>
+			</div>
+			<!-- Profile Card end -->
+		</center>
+			<hr>
+			<!-- Other Contents -->
+			<center>
+			<div class="leftContentsBlock">
+				<ul style="list-style-type: none;padding-left: 0px;border:1px solid black;">
+					<a href="{% url 'basicapp:internships' %}"><li class="leftContent">
+						Internships
+					</li></a>
+					<a href="{% url 'basicapp:scholarships' %}"><li class="leftContent">
+						Scholarship
+					</li></a>
+					<a href="{% url 'basicapp:programmes' %}"><li class="leftContent">
+						Programmes
+					</li></a>
+				</ul>
+			</div>
+		</center>
+			<!-- Other Contents ends -->
+		</div>
+		<!-- Left Section Ends -->
+
+		<!-- Middle Section -->
+		<div class="middle">
+			<ul style="list-style-type: none;padding-left: 0px;padding:2px;">
+				<br>
+				<!-- NewsFeed Update -->
+				<li>
+					<div style="width:100%;padding:5px;border: 0px solid black;background-color: white;box-shadow: 0px 0px 0px 0px;">
+						<br>
+						{% for feed in feed %}
+
+						<h4>{{ feed.user_name }}</h4>
+						<p>{{ feed.date }}</p>
+						<p>{{ feed.description }}</p>
+						<hr>
+						{% empty %}
+						<p>No posts there</p>
+						{% endfor %}
+					</div>
+					<br>
+				</li>
+				<!-- NewsFeed Update ends -->
+		</div>
+		<!-- Middle Section ends -->
+
+		<!-- Right Section -->
+		<div class="right" style="visibility:hidden">
+			<br>
+			<div class="rightContent">
+				<!-- Search Bar -->
+			<div class="rightSearchBlock">
+				<input type="text" placeholder="Search Username" id="rightSearchBlockInputId" class="rightSearchBlockInput">
+				<button class="rightSearchBlockButton">
+					<img src="{% static 'Images/search1.png' %}" style="width:100%;height: 100%;">
+				</button>
+			</div>
+			<br><br>
+			<!-- Search bar ends -->
+			<!-- Notification Block -->
+			<div class="rightNotificationBlock" style="display:none;">
+				<div class="rightNotificationBlockHeader">
+					Notifications:
+				</div>
+				<ul style="list-style-type: none;padding-left: 2px;height: 100%;overflow: scroll">
+					<li class="notificationBlockLi">
+						<span class="notificationBlockUploadBy">Nitish Kumar</span> posted of Machine Learing</span> interest.
+					</li>
+					<li class="notificationBlockLi">
+						<span class="notificationBlockUploadBy">Nitish Kumar</span> posted of Machine Learing</span> interest.
+					</li>
+					<li class="notificationBlockLi">
+						<span class="notificationBlockUploadBy">Nitish Kumar</span> posted of Machine Learing</span> interest.
+					</li>
+					<li class="notificationBlockLi">
+						<span class="notificationBlockUploadBy">Nitish Kumar</span> posted of Machine Learing</span> interest.
+					</li>
+					<li class="notificationBlockLi">
+						<span class="notificationBlockUploadBy">Nitish Kumar</span> posted of Machine Learing</span> interest.
+					</li>
+					<li class="notificationBlockLi">
+						<span class="notificationBlockUploadBy">Nitish Kumar</span> posted of Machine Learing</span> interest.
+					</li>
+					<li class="notificationBlockLi">
+						<span class="notificationBlockUploadBy">Nitish Kumar</span> posted of Machine Learing</span> interest.
+					</li>
+					<li class="notificationBlockLi">
+						<span class="notificationBlockUploadBy">Nitish Kumar</span> posted of Machine Learing</span> interest.
+					</li>
+					<li class="notificationBlockLi">
+						<span class="notificationBlockUploadBy">Nitish Kumar</span> posted of Machine Learing</span> interest.
+					</li>
+					<li class="notificationBlockLi">
+						<span class="notificationBlockUploadBy">Nitish Kumar</span> posted of Machine Learing</span> interest.
+					</li>
+				</ul>
+			</div>
+			<!-- Notification Block ends -->
+
+
+
+
+			</div>
+		</div>
+		<!-- Right Section ends -->
+
+		<!-- Right Section Overlapping 1 -->
+		<div class="overlappingBlock">
+			<div class="overlappingBlockContent" style="display:none;">
+				<div class="overlappingBlockHeader" onclick="closeRightVerticalNavbar()">
+					Back
+				</div>
+
+			</div>
+
+		</div>
+		<!-- Right Section Overlapping 1 ends -->
+		</div>
+		<!-- Container (Envelope) ends -->
+
+	</body>
+
+</html>
