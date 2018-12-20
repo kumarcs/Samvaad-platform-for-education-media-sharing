@@ -57,18 +57,30 @@ class Newsfeed(models.Model):
         return str(self.user_name)
 
 class Societies(models.Model):
-    instite_name = models.ForeignKey('Institute',  on_delete=models.PROTECT)
+    institute_name = models.ForeignKey('Institute',  on_delete=models.PROTECT)
     society = models.CharField(max_length=50)
     profile_pic_path = models.CharField(max_length=50)
     description = models.CharField(max_length=50)
 
     def __str__(self):
-        return instite_name
+        return str(self.institute_name)
 
 
-class Intersts(models.Model):
-    user_name = models.ForeignKey('User_Table',  on_delete=models.PROTECT)
-    interest_type = models.CharField(max_length=50)
+class Interest(models.Model):
+    interest_name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return str(self.interest_name)
+
+class User_Interest(models.Model):
+    user_name = models.ForeignKey(User, on_delete=models.PROTECT)
+    interest_name = models.ForeignKey(Interest, on_delete=models.PROTECT)
+
+    class Meta:
+        unique_together = ("user_name", "interest_name")
+
+    def __str__(self):
+        return (str(self.user_name)+"/"+str(self.interest_name))
 
 
 class Scholarship(models.Model):
