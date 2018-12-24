@@ -124,11 +124,11 @@
 								{% endfor %}
 								</ol>
 						</td>
-					</tr>
-					<tr>
-						<form action="{% url 'basicapp:addUserInterest' %}" method="POST">
+						<td>
+						<form action="{% url 'basicapp:addUserInterest' %}" method="GET">
 							<button type="submit">Add Interest</button>
 						</form>
+					</td>
 					</tr>
 				</table>
 			</div>

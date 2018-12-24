@@ -4,11 +4,12 @@ from django.template import loader
 from basicapp.forms import UserForm
 
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from basicapp.models import (User_Table, Newsfeed, Institute, Internship,
-                            Project, Interest, User_Interest)
+                            Project, Interest, User_Interest, NewsfeedScore)
 from basicapp.forms import UserForm, UserProfileInfoForm, InstituteProfileInfoForm, addUserForm, addNewsFeedForm, CommentForm
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import csrf_protect
@@ -136,9 +137,22 @@ def addNewsFeed(request):
         if add_news_feed.is_valid():
             news_feed = add_news_feed.save(commit=False)
             news_feed.user_name = request.user.username
-            category = { "finance": [ "markets", "economy", "shares" ], "world politics": [ "diplomacy", "UN", "war" ] }
-            print(paralleldots.custom_classifier("Narendra Modi is the Prime Minister of India", category));
             news_feed.save()
+
+            category = { "Sports":['Cricket', 'Football', 'Soccer', 'Swimming', 'Horse Riding', 'Table Tennis', 'Badminton'], 'Artificial Intelligence':['Machine Learning', 'Deep Learning', 'Mimic', 'Linear Regression', 'Logistic Regression'], 'Internet of Things': ['Automation', 'Alexa', 'Siri', 'Google Home'], 'Data Structure and Algorithms':['DFS', 'BFS', 'Array', 'Stacks', 'Queues', 'Recursion', 'Disjoint Set'], 'Competitive Programming':['Codechef', 'Hackerearth', 'Hackerrank', 'Purple'],
+            'Management':['Event', 'Time'], 'Developer':['Software Engineering', 'Project', 'APIs', 'Web Development'], 'Blockchain':['Cryptocurrency', 'Bitcoins', 'Etherium'], 'Operting System':[], 'Art':[], 'Gaming':[], 'Virtual Reality':[], 'Microprocessors':[], 'Aviation':[], 'Mechanical Engineering':[], 'Electronics Engineering':[], 'Textile Engineering':[], 'Mining Engineering':[]}
+
+            api_scores = paralleldots.custom_classifier(request.POST.get('description'), category);
+            print(request.POST.get('description'))
+            print(api_scores)
+            for api_score in api_scores['taxonomy']:
+                tag = api_score['tag']
+                score = api_score['confidence_score']
+                score_table = NewsfeedScore()
+                score_table.newsfeed = news_feed
+                score_table.category = tag
+                score_table.score = score
+                score_table.save()
 
             return index(request)
         else:
@@ -149,6 +163,7 @@ def addNewsFeed(request):
     print('here after')
     return render(request, 'basicapp/addnewsfeed.html', {'add_news_feed_form':add_news_feed_form,'user_record':n1})
 
+#will do later for handling interest of user inputted by user itself
 # added on 24_DEC
 @csrf_exempt
 def addUserInterest(request):
@@ -156,9 +171,10 @@ def addUserInterest(request):
     if request.method == 'GET':
         return HttpResponse(template.render())
     else:
+        input_username = User.objects.get(id=request.user.id)
         input_interest = request.POST.get('user_interest')
         user_interest = User_Interest()
-        user_interest.user_name = request.user.username
+        user_interest.user_name = input_username
         user_interest.interest_name = input_interest
         user_interest.save()
         return HttpResponse("interest added")

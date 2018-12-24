@@ -82,6 +82,13 @@ class User_Interest(models.Model):
     def __str__(self):
         return (str(self.user_name)+"/"+str(self.interest_name))
 
+class NewsfeedScore(models.Model):
+    newsfeed = models.ForeignKey(Newsfeed, on_delete=models.CASCADE)
+    category = models.CharField(max_length=50)
+    score = models.CharField(max_length = 20)
+
+    def __str__(self):
+        return (str(self.newsfeed.description) + " " + self.category + " " + self.score)
 
 class Scholarship(models.Model):
     user_name = models.ForeignKey(User,  on_delete=models.PROTECT)
