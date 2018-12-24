@@ -1,0 +1,16 @@
+<html>
+<title>
+  Add User Interest
+</title>
+<body>
+  Add User Interest
+  <br>
+<form method="POST" action="{% url 'updated:addUserInterest' %}">
+<input type="text" name="user_name" placeholder="Username">
+<br><br>
+<input type="text" name="user_interest" placeholder="interest">
+<br><br>
+<button type="submit">Submit</button>
+</form>
+</body>
+</html>

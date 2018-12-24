@@ -17,6 +17,6 @@ urlpatterns = [
     path('index/internships/', views.internships, name = 'internships'),
     path('index/scholarships/', views.scholarships, name = 'scholarships'),
     path('index/programmes/', views.programmes, name = 'programmes'),
-
+    path('index/addUserInterest/', views.addUserInterest, name='addUserInterest'),
 
 ]

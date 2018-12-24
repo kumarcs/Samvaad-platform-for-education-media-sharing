@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.template import loader
+
 from basicapp.forms import UserForm
 
 from django.contrib.auth import authenticate, login, logout
@@ -6,7 +8,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from basicapp.models import (User_Table, Newsfeed, Institute, Internship,
-                            Project)
+                            Project, Interest, User_Interest)
 from basicapp.forms import UserForm, UserProfileInfoForm, InstituteProfileInfoForm, addUserForm, addNewsFeedForm, CommentForm
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import csrf_protect
@@ -18,7 +20,8 @@ from django.views.generic import (View, TemplateView,
 
 from django.db import connection
 from django.shortcuts import redirect
-
+import paralleldots
+paralleldots.set_api_key("ghdY3NjkLKVI2uE5i3CK0hkpfWugfO9HATYIX9P8kJc")
 
 # Create your views here.
 
@@ -133,6 +136,8 @@ def addNewsFeed(request):
         if add_news_feed.is_valid():
             news_feed = add_news_feed.save(commit=False)
             news_feed.user_name = request.user.username
+            category = { "finance": [ "markets", "economy", "shares" ], "world politics": [ "diplomacy", "UN", "war" ] }
+            print(paralleldots.custom_classifier("Narendra Modi is the Prime Minister of India", category));
             news_feed.save()
 
             return index(request)
@@ -144,6 +149,20 @@ def addNewsFeed(request):
     print('here after')
     return render(request, 'basicapp/addnewsfeed.html', {'add_news_feed_form':add_news_feed_form,'user_record':n1})
 
+# added on 24_DEC
+@csrf_exempt
+def addUserInterest(request):
+    template = loader.get_template('basicapp/addUserInterest.html')
+    if request.method == 'GET':
+        return HttpResponse(template.render())
+    else:
+        input_interest = request.POST.get('user_interest')
+        user_interest = User_Interest()
+        user_interest.user_name = request.user.username
+        user_interest.interest_name = input_interest
+        user_interest.save()
+        return HttpResponse("interest added")
+
 class NewsFeedDetail(DetailView):
     context_object_name= 'newsfeed_detail'
     model=Newsfeed
@@ -152,8 +171,8 @@ class NewsFeedDetail(DetailView):
 def userAccountInfo(request):
     n1 = Internship.objects.filter(user_name__username__icontains = request.user.username)
     n2 = Project.objects.filter(user_name__username__icontains = request.user.username)
-
-    return render(request, 'basicapp/UserProfilePage.html', {'internships': n1, 'projects': n2})
+    n3 = User_Interest.objects.filter(user_name__username__icontains = request.user.username)
+    return render(request, 'basicapp/UserProfilePage.html', {'internships': n1, 'projects': n2, 'interests': n3})
 
 @login_required
 def instituteprofilepage(request):

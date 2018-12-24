@@ -109,6 +109,27 @@
 								</ol>
 						</td>
 					</tr>
+					<tr>
+						<td style="width:25%;">Interests:</td>
+						<td>
+							<ol>
+
+								{% for interest in interests %}
+
+								<li>{{ interest.interest_name }}</li>
+
+									<br>
+									{% empty %}
+									<p>No interests yet :)</p>
+								{% endfor %}
+								</ol>
+						</td>
+					</tr>
+					<tr>
+						<form action="{% url 'basicapp:addUserInterest' %}" method="POST">
+							<button type="submit">Add Interest</button>
+						</form>
+					</tr>
 				</table>
 			</div>
 			<!-- Institute Profile ends -->
