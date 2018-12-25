@@ -5,11 +5,11 @@ from basicapp.forms import UserForm
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from basicapp.models import (User_Table, Newsfeed, Institute, Internship,
-                            Project, Interest, User_Interest, NewsfeedScore)
+                            Project, Interest, User_Interest, NewsfeedScore, Comment)
 from django.db.models import Q
 from basicapp.forms import UserForm, UserProfileInfoForm, InstituteProfileInfoForm, addUserForm, addNewsFeedForm, CommentForm
 from django.views.decorators.csrf import csrf_exempt
@@ -238,3 +238,41 @@ def add_comment_to_post(request, pk):
     else:
         form = CommentForm()
     return render(request, 'basicapp/add_comment_to_post.html', {'form': form})
+
+@login_required
+@csrf_protect
+def loadNewsFeed(request):
+    newsfeeds = Newsfeed.objects.all()
+    res = {}
+    i = 0
+    for newsfeed in newsfeeds:
+        score_ = NewsfeedScore.objects.filter(newsfeed = newsfeed)
+        a = {}
+        tag = []
+        a['user_name'] = newsfeed.user_name
+        a['description'] = newsfeed.description
+        a['news_feed_type'] = newsfeed.news_feed_type
+        a['date'] = newsfeed.date
+        a['image'] = newsfeed.image
+        a['intended_for'] = newsfeed.intended_for
+        a['score'] = {}
+        for score__ in score_:
+            a['score'][score__.category] = float(score__.score)
+            tag.append(score__.category)
+        a['tags'] = tag
+        # To add comments
+        j = 0  #Comments length
+        comments = Comment.objects.filter(post = newsfeed)
+        a['comments'] = {}
+        for comment in comments:
+            b = {}
+            b['user_name'] = comment.user_name
+            b['description'] = comment.description
+            b['created_date'] = comment.created_date
+            a['comments'][str(j)] = b
+            j = j + 1;
+        a['comments_length'] = j    
+        res[str(i)] = a
+        i=i+1
+    res['length'] = i
+    return JsonResponse(res)
