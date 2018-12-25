@@ -12,7 +12,7 @@
     <p> {{ newsfeed_detail.description }} </p>
 
     <a href="{% url 'add_comment_to_post' pk=newsfeed_detail.pk %}"> Add comment </a>
-
+    <a name="comments">
     {% for comment in newsfeed_detail.comments.all %}
     <div class="comment">
       <div class="date">

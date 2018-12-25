@@ -10,6 +10,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from basicapp.models import (User_Table, Newsfeed, Institute, Internship,
                             Project, Interest, User_Interest, NewsfeedScore)
+from django.db.models import Q
 from basicapp.forms import UserForm, UserProfileInfoForm, InstituteProfileInfoForm, addUserForm, addNewsFeedForm, CommentForm
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import csrf_protect
@@ -64,9 +65,18 @@ def user_login(request):
 
 @login_required
 def index(request):
+    n3 = User_Interest.objects.filter(user_name__username__icontains=request.user.username)
+
     n2= Newsfeed.objects.all()
+    interestOne = NewsfeedScore.objects.filter(category=n3[0].interest_name).filter(score__gte=0.85)
+    interestTwo = NewsfeedScore.objects.filter(category=n3[1].interest_name).filter(score__gte=0.85)
+    interestThree = NewsfeedScore.objects.filter(category=n3[2].interest_name).filter(score__gte=0.85)
+
+    #attempting to make one of all query
+    #interestedNewsfeed = NewsfeedScore.objects.filter(Q(category=n3[0].interest_name) | Q(category=n3[1].interest_name) | Q(category=n3[2].interest_name)).filter(score__gte=0.85)
+    print(interestOne)
     n1 = User_Table.objects.filter(user_name__username__icontains=request.user.username)
-    return render(request, 'basicapp/index.html', {'user_record':n1, 'news_feed':n2})
+    return render(request, 'basicapp/index.html', {'user_record':n1, 'first_two_news_feed':n2[0:2], 'interestOneFeed':interestOne, 'interestTwoFeed':interestTwo, 'interestThreeFeed':interestThree, 'rest_news_feed':n2[2:]})
 
 @login_required
 def instituteAdmin(request):

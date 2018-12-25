@@ -88,7 +88,7 @@ class NewsfeedScore(models.Model):
     score = models.CharField(max_length = 20)
 
     def __str__(self):
-        return (str(self.newsfeed.description) + " " + self.category + " " + self.score)
+        return (str(self.newsfeed.description[:10]) + " category:-" + self.category + " score:-" + self.score)
 
 class Scholarship(models.Model):
     user_name = models.ForeignKey(User,  on_delete=models.PROTECT)
