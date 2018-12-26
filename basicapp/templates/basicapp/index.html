@@ -6,8 +6,6 @@
 <link href="{%static 'css/bootstrap.min.css' %}" rel="stylesheet">
 <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
 <link href="{% static 'css/bootstrap-grid.min.css' %}" rel="stylesheet">
-<script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/Homepage.js' %}"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<body style="background-color: WhiteSmoke;padding:0px;margin:0px;width:100%;">
@@ -146,246 +144,11 @@
 					<br>
 				</li>
 				<!-- NewsFeed Update ends -->
-        {% for feed in first_two_news_feed %}
-          <li>
-          <div class="newsfeedContent">
-            <div class="contentHeader">
-              <!-- Profile Pic, username, Institue name -->
-              <div class="newsfeedUserDetail" style="width:100%;background-color:white">
-                <div class="newsfeedUploadedByImage">
-                  <img src="{% static 'Images/maleIcon.png' %}" style="width:70px;height: 70px;">
-                </div>
-                <span class="newsfeedUploadedBy">
-                  {{ feed.user_name }}
-                <br>
-              </span>
-                <span class="newsfeedUploadedByInstituteName">
-                  {{ feed.news_feed_type }}
-                </span>
-                <br>
-                <span class="newsfeedContentUploadDate">
-                  {{ feed.date }}
-                </span>
-              </div>
-            </div>
-						<hr>
-            <!-- Uploaded Image -->
-            <div class="newsfeedUploadedImageBlock">
-              <img src="{% static 'Images/back6.jpg' %}" class="newsfeedUploadedImage">
-            </div>
-            <!-- Uploaded Image ends -->
-            <!--   Caption -->
-            <div class="newsfeedContentCaptionBlock">
-						<pre class="newsfeedContentCaption">
-						{{ feed.description }}
-						</pre>
-						<h3> <a href="{{ feed.id }}"> more... </a></h3>
-						{% if feed.comments.count %}
-						Comments: {{ feed.comments.count }}<br>
-						<iframe src="{{ feed.id }}" style="width:100%"></iframe>
-						{% endif %}
-            </div>
-            <br>
-            <!-- Caption ends -->
-          </div>
-        </li>
-        <br>
-          {% endfor %}
-
-					<h3>recommended newsfeed</h3>
-
-					{% for feed in interestOneFeed %}
 				<li>
-					<div class="newsfeedContent">
-            <div class="contentHeader">
-              <!-- Profile Pic, username, Institue name -->
-              <div class="newsfeedUserDetail" style="width:100%;background-color:white">
-                <div class="newsfeedUploadedByImage">
-                  <img src="{% static 'Images/maleIcon.png' %}" style="width:70px;height: 70px;">
-                </div>
-                <span class="newsfeedUploadedBy">
-                  {{ feed.newsfeed.user_name }}
-                <br>
-              </span>
-                <span class="newsfeedUploadedByInstituteName">
-                  {{ feed.newsfeed.news_feed_type }}
-                </span>
-                <br>
-                <span class="newsfeedContentUploadDate">
-                  {{ feed.newsfeed.date }}
-                </span>
-              </div>
-            </div>
-						<hr>
-            <!-- Uploaded Image -->
-            <div class="newsfeedUploadedImageBlock">
-              <img src="{% static 'Images/back6.jpg' %}" class="newsfeedUploadedImage">
-            </div>
-            <!-- Uploaded Image ends -->
-            <!--   Caption -->
-            <div class="newsfeedContentCaptionBlock">
-						<pre class="newsfeedContentCaption">
-							<h4>for your interest: {{ feed.category }}</h4>
-						{{ feed.newsfeed.description }}
-						</pre>
-						<h3> <a href="{{ feed.newsfeed.id }}"> more... </a></h3>
-						{% if feed.comments.count %}
-						Comments: {{ feed.comments.count }}<br>
-						<iframe src="{{ feed.newsfeed.id }}" style="width:100%"></iframe>
-						{% endif %}
-            </div>
-            <br>
-            <!-- Caption ends -->
-          </div>
-
+					<p id="display">
+					</p>
 				</li>
-				<br>
-          {% endfor %}
-
-					{% for feed in interestTwoFeed %}
-				<li>
-					<div class="newsfeedContent">
-            <div class="contentHeader">
-              <!-- Profile Pic, username, Institue name -->
-              <div class="newsfeedUserDetail" style="width:100%;background-color:white">
-                <div class="newsfeedUploadedByImage">
-                  <img src="{% static 'Images/maleIcon.png' %}" style="width:70px;height: 70px;">
-                </div>
-                <span class="newsfeedUploadedBy">
-                  {{ feed.newsfeed.user_name }}
-                <br>
-              </span>
-                <span class="newsfeedUploadedByInstituteName">
-                  {{ feed.newsfeed.news_feed_type }}
-                </span>
-                <br>
-                <span class="newsfeedContentUploadDate">
-                  {{ feed.newsfeed.date }}
-                </span>
-              </div>
-            </div>
-						<hr>
-            <!-- Uploaded Image -->
-            <div class="newsfeedUploadedImageBlock">
-              <img src="{% static 'Images/back6.jpg' %}" class="newsfeedUploadedImage">
-            </div>
-            <!-- Uploaded Image ends -->
-            <!--   Caption -->
-            <div class="newsfeedContentCaptionBlock">
-						<pre class="newsfeedContentCaption">
-							<h4>for your interest: {{ feed.category }}</h4>
-						{{ feed.newsfeed.description }}
-						</pre>
-						<h3> <a href="{{ feed.newsfeed.id }}"> more... </a></h3>
-						{% if feed.comments.count %}
-						Comments: {{ feed.comments.count }}<br>
-						<iframe src="{{ feed.newsfeed.id }}" style="width:100%"></iframe>
-						{% endif %}
-            </div>
-            <br>
-            <!-- Caption ends -->
-          </div>
-
-				</li>
-				<br>
-          {% endfor %}
-
-					{% for feed in interestThreeFeed %}
-				<li>
-					<div class="newsfeedContent">
-						<div class="contentHeader">
-							<!-- Profile Pic, username, Institue name -->
-							<div class="newsfeedUserDetail" style="width:100%;background-color:white">
-								<div class="newsfeedUploadedByImage">
-									<img src="{% static 'Images/maleIcon.png' %}" style="width:70px;height: 70px;">
-								</div>
-								<span class="newsfeedUploadedBy">
-									{{ feed.newsfeed.user_name }}
-								<br>
-							</span>
-								<span class="newsfeedUploadedByInstituteName">
-									{{ feed.newsfeed.news_feed_type }}
-								</span>
-								<br>
-								<span class="newsfeedContentUploadDate">
-									{{ feed.newsfeed.date }}
-								</span>
-							</div>
-						</div>
-						<hr>
-						<!-- Uploaded Image -->
-						<div class="newsfeedUploadedImageBlock">
-							<img src="{% static 'Images/back6.jpg' %}" class="newsfeedUploadedImage">
-						</div>
-						<!-- Uploaded Image ends -->
-						<!--   Caption -->
-						<div class="newsfeedContentCaptionBlock">
-						<pre class="newsfeedContentCaption">
-							<h4>for your interest: {{ feed.category }}</h4>
-						{{ feed.newsfeed.description }}
-						</pre>
-						<h3> <a href="{{ feed.newsfeed.id }}"> more... </a></h3>
-						{% if feed.comments.count %}
-						Comments: {{ feed.comments.count }}<br>
-						<iframe src="{{ feed.newsfeed.id }}" style="width:100%"></iframe>
-						{% endif %}
-						</div>
-						<br>
-						<!-- Caption ends -->
-					</div>
-
-				</li>
-				<br>
-					{% endfor %}
-
 				<br><hr>
-
-				{% for feed in rest_news_feed %}
-          <li>
-          <div class="newsfeedContent">
-            <div class="contentHeader">
-              <!-- Profile Pic, username, Institue name -->
-              <div class="newsfeedUserDetail" style="width:100%;background-color:white">
-                <div class="newsfeedUploadedByImage">
-                  <img src="{% static 'Images/maleIcon.png' %}" style="width:70px;height: 70px;">
-                </div>
-                <span class="newsfeedUploadedBy">
-                  {{ feed.user_name }}
-                <br>
-              </span>
-                <span class="newsfeedUploadedByInstituteName">
-                  {{ feed.news_feed_type }}
-                </span>
-                <br>
-                <span class="newsfeedContentUploadDate">
-                  {{ feed.date }}
-                </span>
-              </div>
-            </div>
-						<hr>
-            <!-- Uploaded Image -->
-            <div class="newsfeedUploadedImageBlock">
-              <img src="{% static 'Images/back6.jpg' %}" class="newsfeedUploadedImage">
-            </div>
-            <!-- Uploaded Image ends -->
-            <!--   Caption -->
-            <div class="newsfeedContentCaptionBlock">
-						<pre class="newsfeedContentCaption">
-						{{ feed.description }}
-						</pre>
-						<h3> <a href="{{ feed.id }}"> more... </a></h3>
-						{% if feed.comments.count %}
-						Comments: {{ feed.comments.count }}<br>
-						<iframe src="{{ feed.id }}" style="width:100%"></iframe>
-						{% endif %}
-            </div>
-            <br>
-            <!-- Caption ends -->
-          </div>
-        </li>
-        <br>
-          {% endfor %}
-
 
 
 			</ul>
@@ -460,5 +223,61 @@
 		<!-- Container (Envelope) ends -->
 
 	</body>
-
+	<script>
+	$(document).ready(function(){
+	  // $("button").click(function(){
+	    $.ajax({
+	      url:"{% url 'basicapp:loadNewsFeed'%}",
+	      success:function(html){
+	        displayNewsFeed(html);
+	      },
+	    });
+	  //   // Ajax call ends here
+	  // });
+	  // Button click ends here
+	  function displayNewsFeed(data){
+	    // Get number of newsfeeds
+	    var len = Number(data["length"]);
+			
+	    for(var i=0; i<len; i++)
+	    {
+				img_path = data[String(i)]["image"];
+				user_name = data[String(i)]["user_name"];
+				news_feed_type = data[String(i)]["news_feed_type"];
+				date = data[String(i)]["date"];
+				description = data[String(i)]["description"];
+				str = '';
+				// Starting from 273
+	      str = '<hr><div class="newsfeedContent"><div class="contentHeader"><div class="newsfeedUserDetail" style="width:100%;background-color:white"><div class="newsfeedUploadedByImage">';
+				str += '<img src="' + img_path + '" style="width:70px;height:70px;"></div>';
+				str += '<span class="newsfeedUploadedBy">' + user_name + '<br></span>';
+				str += '<span class="newsfeedUploadedByInstituteName">' + news_feed_type + '</span><br>';
+				str += '<span class="newsfeedContentUploadDate">' + date + '</span>';
+				str += '</div></div><hr>';
+				// Description image code is skipped Line-269 to 271
+				str += '<div class="newsfeedContentCaptionBlock"><pre class="newsfeedContentCaption"><h4>for your interest: ';
+				// for your interest skipped
+				str += '</h4>';
+				str += description;
+				str += '</pre>';
+				// upto line 278
+				str += '</div><br></div><br>'
+				// comments
+				comment = 'comments:<br>';
+				comment_length = Number(data[String(i)]['comments_length']);
+				for(var j=0; j<comment_length; j++)
+				{
+						comment += data[String(i)]['comments'][String(j)]['user_name'];
+						comment += ' ' + data[String(i)]['comments'][String(j)]['description'];
+						comment += ' ' +data[String(i)]['comments'][String(j)]['created_date'];
+						comment += '<br>';
+						str += comment;
+						comment = '';
+				}
+				str += '<br><br>'
+	      $("#display").append(str);
+	    }
+	  }
+	});
+	</script>
 </html>
