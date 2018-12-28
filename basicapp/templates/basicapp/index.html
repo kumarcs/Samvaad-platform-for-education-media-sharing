@@ -7,59 +7,54 @@
 <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
 <link href="{% static 'css/bootstrap-grid.min.css' %}" rel="stylesheet">
 <script type="text/javascript" src="{% static 'js/Homepage.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!--newly added by Nitish 27Dec-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<body style="background-color: WhiteSmoke;padding:0px;margin:0px;width:100%;">
+	<body style="background-color: #C2D8E6;padding:0px;margin:0px;width:100%;">
 
 		<!-- NavBar -->
 		<nav class="navbarBody">
-			<ul class="listBody">
-        <li class="list" style="width:auto;padding-right:20%;">
-          <span style="color: white;font-size:3em;">SANVAD</span>
-          <!-- <span style="padding-right:30%;display:inline-block;border:1px solid red"></span> -->
-        </li>
-				<li class="list">
-					<button class="navbarButton">
-						<img src="{% static 'Images/home3.png' %}" class="navBarIcon">
-						<br>
-						Home
-					</button>
-				</li>
+			<table class="navBarContainer">
+				<col width="68%">
+				<col width="32%">
+				<tr>
+	        <td>
+	          <a href="{% url 'basicapp:index' %}">
+							<span style="color: white;font-size:2.5em; padding-left:100px">SAMVAAD</span>
+						</a>
+					</td>
 
-				<li class="list">
-					<button class="navbarButton" onclick="loadRightVerticalNavbar()">
-						<img src="{% static 'Images/message1.png' %}" class="navBarIcon">
-						<br>
-						Messages
-					</button>
-				</li>
-				<li class="list">
-					<button class="navbarButton" onclick="loadRightVerticalNavbar()">
-						<img src="{% static 'Images/notification1.png' %}" class="navBarIcon">
-						<br>
-						Notifications
-					</button>
-				</li>
-        </ul>
-        <ul class="listBody" style="border:0px solid red;width:24%;height:auto;margin:0px;padding:0px;">
-        <li class="list" style="float:right;height:100%">
-          <a href="{% url 'basicapp:accountInfo' %}">
-            <button class="navBarAccount">
-            Account
-          </button></a>
-        </li>
-        <li class="list" style="float:right">
-          <a href="http://127.0.0.1:8000/"><button class="navBarlogoutButton">
-            Logout
-          </button></a>
-        </li>
-          <!--NavBar Right Section -->
-    			<!-- <div class="navBarRight"> -->
-
-
-    			<!-- </div> -->
-    			<!-- NavBar Right Section ends -->
-        <!-- </li> -->
-      </ul>
+				  <td style="padding-right: 100px">
+						<table class="navBarIcons">
+							<tr>
+								<td class="tooltip">
+									<i class="material-icons md-light md-36">message</i>
+									<span class="tooltiptext">Message</span>
+								</td>
+								<td class="tooltip">
+										<i class="material-icons md-light md-36">notification_important</i>
+										<span class="tooltiptext">Notifications</span>
+								</td>
+				        <td class="tooltip">
+				          <a href="{% url 'basicapp:accountInfo' %}">
+										<i class="material-icons md-light md-36">sentiment_very_satisfied</i>
+										<span class="tooltiptext">Account</span>
+									</a>
+				        </td>
+								<td class="tooltip">
+				          <a href="{% url 'basicapp:logout' %}">
+										<i class="material-icons md-light md-36 lime ">toggle_on</i>
+										<span class="tooltiptext">Logout</span>
+									</a>
+				        </td>
+							</tr>
+						</table>
+					</td>
+	      </tr>
+			</table>
 		</nav>
 
 		<!-- NavBar ends -->
@@ -67,7 +62,7 @@
 		<!-- Container (Envelope) -->
 		<div class="myContainer">
 			<!-- Left Section -->
-		<div class="left" style="background-color:black;">
+		<div class="left">
 			<!-- Profile Card -->
 			<br>
       <br>
@@ -75,55 +70,58 @@
 			<div class="profileBlock">
 
 				<!-- Blue Color -->
-				<div style="width:100%;height:25%;background-color: lightblue;">
+				<div style="width:100%;height:25%;background-color: #212E4C;">
 
 				</div>
 				<!-- Blue Color ends -->
 				<center>
 					<div class="profileImageBlock">
-						<!-- <img src="{{ user.profile_pic_path.url }}" class="profileImage"> -->
-						<img src="{% static 'Images/maleIcon.png' %}" class="profileImage">
+						<img src="{% static 'Images/defaultProfile.jpg' %}" class="profileImage">
 					</div>
 					<div class="profileBlockUsername">
 						{% for user in user_record %}
               {{ user.first_name }} {{user.last_name}}
 					</div>
-          <br>
 					<div class="profileBlockInstituteName">
-            <table class="profileBlockInstituteName">
-              <tr>
-                <!-- <td>Student&nbsp;at:</td> -->
-                <td><b>{{ user.institute_name_user }}</b></td>
-              </tr>
-            </table>
+        		<b>@ {{ user.institute_name_user }}</b>
 					</div>
-          <br>
 					<hr>
-
 					<div class="profileBlockOtherDetails">
-  					  {{ user.user_name }}
+  					  <span style="color: green">Username - {{ user.user_name }}</span>
+							<br>
+							<span>Dob - {{ user.dob }}</span>
+							<br>
+							{% if user.access_type == 'NormalUser' %}
+							<span style="font-size:0.8em">Status:- Normal User</span>
+							{% elif user.access_type == 'InstituteAdmin' %}
+							<span style="font-size:0.8em">Status:- Institute Admin</span>
+							{% elif user.access_type == 'SuperAdmin' %}
+							<span style="font-size:0.8em">Status:- Super Admin</span>
+							{% else %}
+							<span style="font-size:0.5em">Status:- not found</span>
+							{% endif %}
             {% endfor %}
 					</div>
 				</center>
 			</div>
 			<!-- Profile Card end -->
-		</center>
+			</center>
     <br>
     <br>
 			<!-- Other Contents -->
 			<center>
 			<div class="leftContentsBlock">
-				<ul style="list-style-type: none;padding-left: 0px;border:0px solid black;">
-					<a href="{% url 'basicapp:internships' %}"><li class="leftContent">
-						<button class="leftContent" style="width:100%;">Internships</button>
-					</li></a>
-					<a href="{% url 'basicapp:scholarships' %}"><li class="leftContent">
-						<button class="leftContent" style="width:100%;">Scholarship</button>
-					</li></a>
-					<a href="{% url 'basicapp:programmes' %}"><li class="leftContent">
-						<button class="leftContent" style="width:100%;">Programmes</button>
-					</li></a>
-				</ul>
+				<table style="height: 100%; width: 100%; border:0px solid red; border-spacing: 8px 8px;">
+					<tr class="leftContent">
+						<td><a href="{% url 'basicapp:internships' %}">Internships</a></td>
+					</tr>
+					<tr class="leftContent">
+						<td><a href="{% url 'basicapp:scholarships' %}">Scholarships</a></td>
+					</tr>
+					<tr class="leftContent">
+						<td><a href="{% url 'basicapp:programmes' %}">Programmes</a></td>
+					</tr>
+				</table>
 			</div>
 		</center>
 			<!-- Other Contents ends -->
@@ -138,7 +136,7 @@
 				<li>
 					<div style="width:100%;padding:10px;border: 0px solid black;background-color: white;box-shadow: 0px 0px 0px 0px;">
             <a href="{% url 'basicapp:addnewsfeed' %}">
-              <button style="width:100%;border:1px solid black;background-color:lightblue;height:40px;">Add Status</button>
+              <button style="width:100%;border:1px solid black;background-color:#212E4C;height:40px;Color:white">Add Status</button>
             </a>
 					</div>
 					<br>
@@ -167,40 +165,25 @@
 			<div class="rightContent">
 				<!-- Search Bar -->
 			<div class="rightSearchBlock">
-				<input type="text" placeholder="Search Username" id="rightSearchBlockInputId" class="rightSearchBlockInput">
-				<button class="rightSearchBlockButton">
-					<img src="{% static 'Images/search1.png' %}" style="width:100%;height: 100%;">
-				</button>
+				<input type="text" placeholder="Search" id="rightSearchBlockInputId" class="rightSearchBlockInput">
+				<i class="material-icons md-36 rightSearchBlockButton">search</i>
 			</div>
 			<br><br>
 			<!-- Search bar ends -->
 
 			<!-- Messages Block -->
 			<div class="messagesBlock" style="padding:5px;">
-				<div class="messagesHeader" style="font-family:Palatino Linotype;font-weight:normal">
-					Pending Requests
+				<div class="messagesHeader" style="font-family:arial; background-color:#212E4C; Color: white; text-align:center;">
+					{% for user in user_record %}
+					Feed from {{ user.institute_name_user }}
+					{% endfor %}
 				</div>
-				<ul class="messagesUl">
-					<li class="messagesUlLi" style="border:0px solid black;">
-						<span class="messageSenderName">Harry Chhabra</span>
-						<br>
-						<span class="messageSenderMessage">
-							Indian Institute of Technology, Bombay
-						</span>
-						<hr>
-					</li>
-          <br>
-					<li class="messagesUlLi" style="border:0px solid black;">
-						<span class="messageSenderName">
-							Ronal Choudhary
-						</span>
-						<br>
-						<span class="messageSenderMessage">
-							Nepal Institute of Technology, Kathmandu
-						</span>
-					</li>
-				</ul>
-
+				<div class="feedHeadlines">
+					<ul>
+						<li>headline one</li>
+						<li>headline two</li>
+					</ul>
+				</div>
 			</div>
 
 			<!-- Messages Block ends -->
@@ -224,21 +207,35 @@
 
 	</body>
 	<script>
-	$(document).ready(function(){
-	  // $("button").click(function(){
-	    $.ajax({
-	      url:"{% url 'basicapp:loadNewsFeed'%}",
-	      success:function(html){
-	        displayNewsFeed(html);
-	      },
-	    });
-	  //   // Ajax call ends here
-	  // });
-	  // Button click ends here
+	$(document).ready(function (){
+		$.get("{% url 'basicapp:loadNewsFeed' %}", function(data, status){
+			displayNewsFeed(data);
+		});
+	});
+
+
+
+	// $(document).ready(function(){
+	//
+	// 	console.log("ready for newsfeed");
+	//
+	//   $(".mybutton").click(function(){
+	//     //$.ajax({
+	// 			console.log('button pressed');
+	// 			alert("function called");
+	//       url:"{% url 'basicapp:loadNewsFeed' %}",
+	//       success:function(html){
+	//         displayNewsFeed(html);
+	//       },
+	//     });
+	//   //   // Ajax call ends here
+	//   // });
+	//   // Button click ends here
+	//
 	  function displayNewsFeed(data){
 	    // Get number of newsfeeds
 	    var len = Number(data["length"]);
-			
+
 	    for(var i=0; i<len; i++)
 	    {
 				img_path = data[String(i)]["image"];
@@ -248,20 +245,20 @@
 				description = data[String(i)]["description"];
 				str = '';
 				// Starting from 273
-	      str = '<hr><div class="newsfeedContent"><div class="contentHeader"><div class="newsfeedUserDetail" style="width:100%;background-color:white"><div class="newsfeedUploadedByImage">';
-				str += '<img src="' + img_path + '" style="width:70px;height:70px;"></div>';
+	      str = '<div class="newsfeedContent"><div class="contentHeader"><div class="newsfeedUserDetail" style="width:100%;background-color:white"><div class="newsfeedUploadedByImage">';
+				str += '<img src="{% static 'Images/defaultProfile.jpg' %}" style="width:70px;height:70px;"></div>';
 				str += '<span class="newsfeedUploadedBy">' + user_name + '<br></span>';
 				str += '<span class="newsfeedUploadedByInstituteName">' + news_feed_type + '</span><br>';
 				str += '<span class="newsfeedContentUploadDate">' + date + '</span>';
 				str += '</div></div><hr>';
 				// Description image code is skipped Line-269 to 271
-				str += '<div class="newsfeedContentCaptionBlock"><pre class="newsfeedContentCaption"><h4>for your interest: ';
+				str += '<div class="newsfeedContentCaptionBlock"><div class="newsfeedContentCaption"><span style="font-weight:bold; Color:grey">for your interest: ';
 				// for your interest skipped
-				str += '</h4>';
+				str += '</span><br>';
 				str += description;
-				str += '</pre>';
+				str += '</div>';
 				// upto line 278
-				str += '</div><br></div><br>'
+				str += '</div></div><br>'
 				// comments
 				comment = 'comments:<br>';
 				comment_length = Number(data[String(i)]['comments_length']);
@@ -274,10 +271,9 @@
 						str += comment;
 						comment = '';
 				}
-				str += '<br><br>'
 	      $("#display").append(str);
 	    }
 	  }
-	});
+	// });
 	</script>
 </html>

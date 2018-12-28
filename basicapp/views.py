@@ -23,7 +23,7 @@ from django.views.generic import (View, TemplateView,
 from django.db import connection
 from django.shortcuts import redirect
 import paralleldots
-paralleldots.set_api_key("ghdY3NjkLKVI2uE5i3CK0hkpfWugfO9HATYIX9P8kJc")
+paralleldots.set_api_key("hsVvRLei1RabmbTNKO8ifwbtzxVatqREEN9pc9HxQj8")
 
 # Create your views here.
 
@@ -153,8 +153,6 @@ def addNewsFeed(request):
             'Management':['Event', 'Time'], 'Developer':['Software Engineering', 'Project', 'APIs', 'Web Development'], 'Blockchain':['Cryptocurrency', 'Bitcoins', 'Etherium'], 'Operting System':[], 'Art':[], 'Gaming':[], 'Virtual Reality':[], 'Microprocessors':[], 'Aviation':[], 'Mechanical Engineering':[], 'Electronics Engineering':[], 'Textile Engineering':[], 'Mining Engineering':[]}
 
             api_scores = paralleldots.custom_classifier(request.POST.get('description'), category);
-            print(request.POST.get('description'))
-            print(api_scores)
             for api_score in api_scores['taxonomy']:
                 tag = api_score['tag']
                 score = api_score['confidence_score']
@@ -271,7 +269,7 @@ def loadNewsFeed(request):
             b['created_date'] = comment.created_date
             a['comments'][str(j)] = b
             j = j + 1;
-        a['comments_length'] = j    
+        a['comments_length'] = j
         res[str(i)] = a
         i=i+1
     res['length'] = i

@@ -3,6 +3,7 @@ from basicapp import views
 
 app_name = 'basicapp'
 urlpatterns = [
+    path('logout/', views.user_logout, name='logout'),
     path('', views.user_login, name='login'),
     path('instituteAdmin/adduser/', views.addUser, name='adduser'),
     path('accountInfo/', views.userAccountInfo, name='accountInfo'),
@@ -18,5 +19,6 @@ urlpatterns = [
     path('index/scholarships/', views.scholarships, name = 'scholarships'),
     path('index/programmes/', views.programmes, name = 'programmes'),
     path('index/addUserInterest/', views.addUserInterest, name='addUserInterest'),
+    path('loadNewsFeed/', views.loadNewsFeed, name='loadNewsFeed'),
 
 ]
