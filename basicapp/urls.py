@@ -20,5 +20,5 @@ urlpatterns = [
     path('index/programmes/', views.programmes, name = 'programmes'),
     path('index/addUserInterest/', views.addUserInterest, name='addUserInterest'),
     path('loadNewsFeed/', views.loadNewsFeed, name='loadNewsFeed'),
-
+    path('addComment/', views.addComment, name='addComment'),
 ]

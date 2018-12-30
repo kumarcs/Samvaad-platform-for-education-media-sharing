@@ -66,17 +66,15 @@ def user_login(request):
 @login_required
 def index(request):
     n3 = User_Interest.objects.filter(user_name__username__icontains=request.user.username)
+    user_interests = []
+    for n in n3:
+        print(n.interest_name)
+        user_interests.append(n.interest_name)
 
     n2= Newsfeed.objects.all()
-    interestOne = NewsfeedScore.objects.filter(category=n3[0].interest_name).filter(score__gte=0.85)
-    interestTwo = NewsfeedScore.objects.filter(category=n3[1].interest_name).filter(score__gte=0.85)
-    interestThree = NewsfeedScore.objects.filter(category=n3[2].interest_name).filter(score__gte=0.85)
-
-    #attempting to make one of all query
-    #interestedNewsfeed = NewsfeedScore.objects.filter(Q(category=n3[0].interest_name) | Q(category=n3[1].interest_name) | Q(category=n3[2].interest_name)).filter(score__gte=0.85)
-    print(interestOne)
     n1 = User_Table.objects.filter(user_name__username__icontains=request.user.username)
-    return render(request, 'basicapp/index.html', {'user_record':n1, 'first_two_news_feed':n2[0:2], 'interestOneFeed':interestOne, 'interestTwoFeed':interestTwo, 'interestThreeFeed':interestThree, 'rest_news_feed':n2[2:]})
+    print(user_interests[0])
+    return render(request, 'basicapp/index.html', {'user_interests':user_interests,'user_record':n1})
 
 @login_required
 def instituteAdmin(request):
@@ -240,8 +238,10 @@ def add_comment_to_post(request, pk):
 @login_required
 @csrf_protect
 def loadNewsFeed(request):
-    newsfeeds = Newsfeed.objects.all()
+    # interests = User_Interest.objects.filter(user_name__username__icontains=request.user.username)
+    newsfeeds = Newsfeed.objects.all().order_by('-date')
     res = {}
+
     i = 0
     for newsfeed in newsfeeds:
         score_ = NewsfeedScore.objects.filter(newsfeed = newsfeed)
@@ -253,6 +253,7 @@ def loadNewsFeed(request):
         a['date'] = newsfeed.date
         a['image'] = newsfeed.image
         a['intended_for'] = newsfeed.intended_for
+        a['id'] = newsfeed.id
         a['score'] = {}
         for score__ in score_:
             a['score'][score__.category] = float(score__.score)
@@ -274,3 +275,18 @@ def loadNewsFeed(request):
         i=i+1
     res['length'] = i
     return JsonResponse(res)
+
+def addComment(request):
+    id = request.GET.get('id')
+    comment_description = request.GET.get('comment')
+    username = request.GET.get('username')
+    newsfeed = Newsfeed.objects.get(pk = id)
+    comment_object = Comment()
+    comment_object.post = newsfeed
+    comment_object.user_name = username
+    comment_object.description = comment_description
+    comment_object.save()
+    data = {}
+    data['message'] = 'working'
+    print("comment added id: " + id)
+    return JsonResponse(data);

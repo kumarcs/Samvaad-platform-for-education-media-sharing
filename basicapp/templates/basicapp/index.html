@@ -87,7 +87,7 @@
 					</div>
 					<hr>
 					<div class="profileBlockOtherDetails">
-  					  <span style="color: green">Username - {{ user.user_name }}</span>
+  					  <span style="color: green">Username - <span class="loggedInUsername">{{ user.user_name }}</span></span>
 							<br>
 							<span>Dob - {{ user.dob }}</span>
 							<br>
@@ -204,38 +204,67 @@
 		<!-- Right Section Overlapping 1 ends -->
 		</div>
 		<!-- Container (Envelope) ends -->
-
+		<!-- To get access to User interests -->
+		<div class="user_interests" style="display:none;">
+			User Interest:
+			{% for user_interest in user_interests %}
+				<p class="user_interest">{{ user_interest }}</p>
+			{% endfor %}
+		</div>
 	</body>
 	<script>
-	$(document).ready(function (){
-		$.get("{% url 'basicapp:loadNewsFeed' %}", function(data, status){
-			displayNewsFeed(data);
-		});
-	});
+
+	function addComment(id){
+		value_id = 'addComment_'+id;
+		comment_description = document.getElementById(value_id).value;
+	 	if( comment_description.length == 0) return;
+		newsfeed_id = id;
+		var username = document.getElementsByClassName("loggedInUsername")[0].innerHTML; // User name of current logged in user
+		$.ajax({
+         type: "GET",
+         url: "{% url 'basicapp:addComment' %}",
+         data: {id:newsfeed_id,comment:comment_description,username:username},
+         success: function(msg){
+                     msg = msg["message"];
+										 // if(msg != "working") return;
+										 id = 'commentBlock' + id;
+										 msg = '<b>'+username+'</b> '+ comment_description + '<br>';
+										 pre_content = document.getElementById(id).innerHTML;
+										 if(pre_content.length == 0) msg = 'Comments:<br>' + msg;
+										 id = '#'+id;
+										 $(id).append(msg);
+                  }
+    });
 
 
+	}
 
-	// $(document).ready(function(){
-	//
-	// 	console.log("ready for newsfeed");
-	//
-	//   $(".mybutton").click(function(){
-	//     //$.ajax({
-	// 			console.log('button pressed');
-	// 			alert("function called");
-	//       url:"{% url 'basicapp:loadNewsFeed' %}",
-	//       success:function(html){
-	//         displayNewsFeed(html);
-	//       },
-	//     });
-	//   //   // Ajax call ends here
-	//   // });
-	//   // Button click ends here
-	//
+
+	$(document).ready(function(){
+	  // $("button").click(function(){
+		var user_interests_json = document.getElementsByClassName("user_interest");
+		var length = user_interests_json.length;
+		var user_interests = [];
+
+		for (var i = 0; i<length; i++){
+			user_interests.push(user_interests_json[i].innerHTML);
+		}
+
+
+	    $.ajax({
+	      url:"{% url 'basicapp:loadNewsFeed'%}",
+	      success:function(html){
+	        displayNewsFeed(html);
+	      },
+	    });
+	  //   // Ajax call ends here
+	  // });
+	  // Button click ends here
 	  function displayNewsFeed(data){
 	    // Get number of newsfeeds
 	    var len = Number(data["length"]);
-
+			var recommend = '';
+			var others = '<span id="otherNewsFeed">';
 	    for(var i=0; i<len; i++)
 	    {
 				img_path = data[String(i)]["image"];
@@ -243,37 +272,71 @@
 				news_feed_type = data[String(i)]["news_feed_type"];
 				date = data[String(i)]["date"];
 				description = data[String(i)]["description"];
+				id = data[String(i)]["id"];
+				var flag = false;
 				str = '';
 				// Starting from 273
 	      str = '<div class="newsfeedContent"><div class="contentHeader"><div class="newsfeedUserDetail" style="width:100%;background-color:white"><div class="newsfeedUploadedByImage">';
 				str += '<img src="{% static 'Images/defaultProfile.jpg' %}" style="width:70px;height:70px;"></div>';
 				str += '<span class="newsfeedUploadedBy">' + user_name + '<br></span>';
-				str += '<span class="newsfeedUploadedByInstituteName">' + news_feed_type + '</span><br>';
-				str += '<span class="newsfeedContentUploadDate">' + date + '</span>';
+				str += '<span class="newsfeedUploadedByInstituteName"><span style="color:black">' + news_feed_type + '</span> category</span><br>';
+				str += '<span class="newsfeedContentUploadDate"><span style="color:black">' + date.substr(0,10) + ' </span>at <span style="color:black">' + date.substr(11,5) + '</span></span>';
 				str += '</div></div><hr>';
 				// Description image code is skipped Line-269 to 271
-				str += '<div class="newsfeedContentCaptionBlock"><div class="newsfeedContentCaption"><span style="font-weight:bold; Color:grey">for your interest: ';
+				str += '<div class="newsfeedContentCaptionBlock"><div class="newsfeedContentCaption"><span style="font-weight:Normal; Color:grey"><b>for your interest: </b><span style="font-size:0.8em">';
 				// for your interest skipped
-				str += '</span><br>';
+				// Implementing for your interest
+					for(var j =0; j<user_interests.length; j++)
+					{
+						if(data[String(i)]["score"][user_interests[j]]> 0.85 )
+						{
+							// str += data[String(i)]["score"][user_interests[j]];
+							str += user_interests[j] + ', ';
+							if(!flag && data[String(i)]["score"][user_interests[j]]> 0.95){
+								flag = true;
+							}
+						}
+					}
+
+				// Implementing for your interest ends
+				str += '</span></span><br>';
 				str += description;
-				str += '</div>';
+				str+='</div><hr>'
 				// upto line 278
-				str += '</div></div><br>'
+				str += '</div><span id = "commentBlock' + id + '" >';
+
+				// To add new comment
+
+				str += '<input style="width: 75%;" type="text" placeholder="add comments" id="addComment_' + id + '">';
+				// str += '<button onclick="addComment('+ id + ')">Add comment</button><br><br>';
+				str += '<button style="width: 23%; margin-left: 2%;" onclick="addComment('+id+')" >post comment</button><br>';
 				// comments
-				comment = 'comments:<br>';
 				comment_length = Number(data[String(i)]['comments_length']);
+				comment = '<span style="color:grey"><b>comments </span><span style="color:grey; font-size:0.8em;">' + comment_length + ':</span></b><br>';
 				for(var j=0; j<comment_length; j++)
 				{
-						comment += data[String(i)]['comments'][String(j)]['user_name'];
-						comment += ' ' + data[String(i)]['comments'][String(j)]['description'];
-						comment += ' ' +data[String(i)]['comments'][String(j)]['created_date'];
-						comment += '<br>';
+						comment += '<div style="margin: 8px 0px">'
+						comment_date = data[String(i)]['comments'][String(j)]['created_date'];
+						comment += '<b>'+data[String(i)]['comments'][String(j)]['user_name'] +'</b>';
+						comment += '<span style="color:grey;"> on </span>' + comment_date.substr(0, 10) + '<span style="color: grey;"> at </span>' + comment_date.substr(11, 5) + '<br>';
+						comment += '&nbsp; &nbsp;' + data[String(i)]['comments'][String(j)]['description'];
+						comment += '<br></div>';
 						str += comment;
 						comment = '';
 				}
-	      $("#display").append(str);
+				str += '</span><br></div><br>';
+				if(flag == true )
+				{
+					recommend += str;
+				}
+				else
+				{
+					others += str;
+				}
 	    }
+			others += '</span>';
+			$("#display").append(recommend + '<br>Others<br>'+others);
 	  }
-	// });
+	});
 	</script>
 </html>

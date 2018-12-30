@@ -204,8 +204,8 @@
   box-sizing: border-box;
 }
 .newsfeedUploadedByImage{
-  width:70px;
-  height: 70px;
+  width:65px;
+  height: 65px;
   display:inline-block;
   overflow: hidden;
   float:left;
@@ -215,13 +215,13 @@
 }
 .newsfeedUploadedBy{
   color:black;
-  font-size:1.5em;
+  font-size:1.2em;
   font-weight: bold;
 }
 .newsfeedUploadedByInstituteName{
   font-size: 1.2em;
   word-break: normal;
-  color: grey;
+  color: lightgray;
   font-weight:bold;
 }
 .newsfeedContentUploadDate{
