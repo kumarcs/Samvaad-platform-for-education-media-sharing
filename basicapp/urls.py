@@ -21,5 +21,7 @@ urlpatterns = [
     path('index/addUserInterest/', views.addUserInterest, name='addUserInterest'),
     path('loadNewsFeed/', views.loadNewsFeed, name='loadNewsFeed'),
     path('addComment/', views.addComment, name='addComment'),
-    path('updateProfilePic/', views.updateProfilePic, name='updateProfilePic'),
+    path('deleteUserInterest/', views.deleteUserInterest, name='deleteUserInterest'),
+    path('addUserNewInterest/',views.addUserNewInterest,name='addUserNewInterest'),
+    path('searchKeyword/',views.searchKeyword,name='searchKeyword'),
 ]

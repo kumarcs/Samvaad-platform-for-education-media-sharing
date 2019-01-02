@@ -1,5 +1,4 @@
 {% load staticfiles %}
-changed by me 
 <html>
 <title>
 	User Profile Page
@@ -51,7 +50,7 @@ changed by me
 				<table style="border:0px solid black;width:100%">
 					<tr>
 						<td style="width:25%;">Username:</td>
-						<td>{{ request.user.username }}</td>
+						<td><input type="text" value="{{request.user.username}}" readonly id="username"></td>
 					</tr>
 					<tr>
 						<td style="width:25%;">Profile Pic:</td>
@@ -68,18 +67,22 @@ changed by me
 						<td>
 							<ol>
 								{% for project in projects %}
-								<li> <h3> {{ project.user_name }}</h3> </li>
-								{{project.status}}
+								<li> <h3> <input type="text" value="{{project.user_name}}" id="projectUsername{{project.pk}}" readonly></h3> </li>
+								<input type="text" value="{{project.status}}" id="projectStatus{{project.pk}}" readonly>
 								<br>
-								{{project.info}}
+								<input type="text" value="{{project.info}}" id="projectInfo{{project.pk}}" readonly>
 								<br>
-								{{project.category}}
+								<input type="text" value="{{project.category}}" id="projectCategory{{project.pk}}" readonly>
                 <br>
-								{{project.upload_date}}
+								<input type="text" value="{{project.upload_date}}" id="projectUploadDate{{project.pk}}" readonly>
 								<br>
-								{{project.expir_date}}
+								<input type="text" value="{{project.expir_date}}" id="projectExpiryDate{{project.pk}}" readonly>
 								<br>
-								{{project.description}}
+								<input type="text" value="{{project.description}}" id="projectDescription{{project.pk}}" readonly>
+								<br>
+								<button onclick="editProject({{project.pk}})">Edit</button>
+								<button onclick="deleteProject({{project.pk}})">Delete</button>
+								<button onclick="saveProject({{project.pk}})">Save</button>
 								{% empty %}
 								<p>No Projects yet :)</p>
 								{% endfor %}
@@ -93,18 +96,18 @@ changed by me
 
 								{% for internship in internships %}
 
-								<li><h2>{{ internship.user_name }}</h2></li>
-									{{ internship.status }}
+								<li><h2><input type="text" id="internshipUsername{{internship.pk}}" value="{{internship.user_name}}" readonly></h2></li>
+									<input type="text" id="internshipStatus{{internship.pk}}" value="{{internship.status}}" readonly>
 									<br>
-									{{ internship.info }}
+									<input type="text" id="internshipInfo{{internship.pk}}" value="{{internship.info}}" readonly>
 									<br>
-									{{ internship.category }}
+									<input type="text" id="internshipCategory{{internship.pk}}" value="{{internship.category}}" readonly>
 									<br>
-									{{ internship.upload_date }}
+									<input type="text" id="internshipUploadDate{{internship.pk}}" value="{{internship.upload_date}}" readonly>
 									<br>
-									{{ internship.expir_date }}
+									<input type="text" id="internshipExpiryDate{{internship.pk}}" value="{{internship.expir_date}}" readonly>
 									<br>
-									{{ internship.description }}
+									<input type="text" id="internshipDescription{{internship.pk}}" value="{{internship.description}}" readonly>
 									{% empty %}
 									<p>No Internships yet :)</p>
 								{% endfor %}
@@ -114,22 +117,22 @@ changed by me
 					<tr>
 						<td style="width:25%;">Interests:</td>
 						<td>
-							<ol>
-
+							<ul id="interestList">
 								{% for interest in interests %}
 
-								<li>{{ interest.interest_name }}</li>
+								<li id="interestList{{interest.pk}}"><input type="text" value="{{interest.interest_name}}" readonly>
+									<input type="button" onclick="deleteInterest({{interest.id}})" value="Delete">
+								</li>
 
 									<br>
 									{% empty %}
 									<p>No interests yet :)</p>
 								{% endfor %}
-								</ol>
+							</ul>
 						</td>
 						<td>
-						<form action="{% url 'basicapp:addUserInterest' %}" method="GET">
-							<button type="submit">Add Interest</button>
-						</form>
+							<input type="text" id="newUserInterest">
+							<button onclick="addNewInterest()">Add Interest</button>
 					</td>
 					</tr>
 				</table>
@@ -141,14 +144,11 @@ changed by me
 					<table style="width:100%;">
 						<tr>
 							<td style="width:25%">Username:</td>
-							<td><input id="userName" type="text" placeholder="Username" style="width:74%;height:35px;font-size:15px;"></td>
+							<td><input type="text" placeholder="Username" style="width:74%;height:35px;font-size:15px;"></td>
 						</tr>
 						<tr>
 							<td style="width:25%">User Profile Pic:</td>
-							<td>
-									<input name="profilePic" id="profilePicId" type="file" accept="image/*" style="width:74%;height:35px;font-size:15px;"></td>
-									<button id="profilePicUpload" type="sumbmit" name="Submit">Submit</button></td>
-							</td>
+							<td><input type="file" accept="image/*" style="width:74%;height:35px;font-size:15px;"></td>
 						</tr>
 						<tr>
 							<td style="width:25%">Add description:</td>
@@ -194,22 +194,44 @@ changed by me
 		</div>
 		<!-- Footer ends -->
 </body>
+
 <script>
-$(document).ready(function(){
-	$("#profilePicUpload").click(function(){
-		file = $("#profilePicId").val();
-		alert("{% url 'basicapp:updateProfilePic' %}" + file);
-		$.ajax({
-			url:"{% url 'basicapp:updateProfilePic'%}",
-			data: {profilePic:file},
-			success:function(html){
-				alert(html);
-			},
-		});
+function deleteInterest(id){
+	console.log('ASA');
+	$.ajax({
+		type:'POST',
+		url:"{% url 'basicapp:deleteUserInterest'%}",
+		data:{id:id},
+		success:function(msg){
+			console.log('res');
+			if(msg['status'] == 'true'){
+				child_list = '#interestList'+id;
+				$(child_list).remove();
+			}
+		}
 	});
-});
+}
+function addNewInterest()
+{
+	interest_name = document.getElementById('newUserInterest').value;
+	$.ajax({
+		type:'POST',
+		url:"{% url 'basicapp:addUserNewInterest' %}",
+		data:{interest:interest_name},
+		success:function(msg){
+			if(msg['status'] == 'false')
+				{
+					alert(msg['message']);
+					return;
+				}
+			parent = '#interestList';
+			id = msg['id'];
+			value = "<li id='interestList"+id+"'><input type='text' value='"+interest_name+"' readonly>";
+			value += "<input type='button' onclick='deleteInterest("+id+")' value='Delete'></li>";
+			$(parent).append(value);
+		}
+	});
+}
 </script>
-
-
-
 </html>
+

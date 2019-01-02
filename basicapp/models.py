@@ -23,7 +23,7 @@ class User_Table(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     dob = models.CharField(max_length=50)
-    profile_pic_path = models.ImageField(upload_to='profile_pic', default='profile_pic\defaultProfile.jpg')
+    profile_pic_path = models.ImageField(upload_to='profile_pic', default='samvad\media\big.jpg')
     skill_set = models.CharField(max_length=1000)
     access_type = models.CharField(max_length=50)
     status = models.CharField(max_length=50)
@@ -80,7 +80,7 @@ class User_Interest(models.Model):
         unique_together = ("user_name", "interest_name")
 
     def __str__(self):
-        return (str(self.user_name)+"/"+str(self.interest_name))
+        return (str(self.user_name)+"/"+str(self.interest_name) + "/" +str(self.id))
 
 class NewsfeedScore(models.Model):
     newsfeed = models.ForeignKey(Newsfeed, on_delete=models.CASCADE)
