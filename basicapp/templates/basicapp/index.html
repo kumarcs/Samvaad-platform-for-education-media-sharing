@@ -76,10 +76,10 @@
 				<!-- Blue Color ends -->
 				<center>
 					<div class="profileImageBlock">
-						<img src="{% static 'Images/defaultProfile.jpg' %}" class="profileImage">
+						{% for user in user_record %}
+						<img src="{{ user.profile_pic_path.url }}" class="profileImage">
 					</div>
 					<div class="profileBlockUsername">
-						{% for user in user_record %}
               {{ user.first_name }} {{user.last_name}}
 					</div>
 					<div class="profileBlockInstituteName">
@@ -212,7 +212,10 @@
 			{% endfor %}
 		</div>
 	</body>
-	<script>
+<script>
+
+
+
 
 	function addComment(id){
 		value_id = 'addComment_'+id;

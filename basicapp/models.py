@@ -23,7 +23,7 @@ class User_Table(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     dob = models.CharField(max_length=50)
-    profile_pic_path = models.ImageField(upload_to='profile_pic', default='samvad\media\big.jpg')
+    profile_pic_path = models.ImageField(upload_to='profile_pic', default='profile_pic\defaultProfile.jpg')
     skill_set = models.CharField(max_length=1000)
     access_type = models.CharField(max_length=50)
     status = models.CharField(max_length=50)

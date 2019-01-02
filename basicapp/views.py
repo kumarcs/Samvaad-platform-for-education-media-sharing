@@ -290,3 +290,15 @@ def addComment(request):
     data['message'] = 'working'
     print("comment added id: " + id)
     return JsonResponse(data);
+
+def updateProfilePic(request):
+    print('just entered')
+    image = request.GET.get('profilePic');
+    userObject = User_Table.objects.get(user_name__username__icontains=request.user.username)
+    userObject.profile_pic_path = image
+    userObject.save()
+    print(image)
+    data = {}
+    data['result']='gotPic'
+    print('json created')
+    return JsonResponse(data)
