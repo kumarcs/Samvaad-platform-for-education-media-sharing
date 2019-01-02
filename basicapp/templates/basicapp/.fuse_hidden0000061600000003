@@ -1,0 +1,397 @@
+{% load staticfiles %}
+
+<html>
+<title>User Homepage</title>
+<link href="{% static 'css/Homepage.css' %}" rel="stylesheet">
+<link href="{%static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap-grid.min.css' %}" rel="stylesheet">
+<script type="text/javascript" src="{% static 'js/Homepage.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!--newly added by Nitish 27Dec-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<body style="background-color: #C2D8E6;padding:0px;margin:0px;width:100%;">
+
+		<!-- NavBar -->
+		<nav class="navbarBody">
+			<table class="navBarContainer">
+				<col width="68%">
+				<col width="32%">
+				<tr>
+	        <td>
+	          <a href="{% url 'basicapp:index' %}">
+							<span style="color: white;font-size:2.5em; padding-left:100px">SAMVAAD</span>
+						</a>
+					</td>
+
+				  <td style="padding-right: 100px">
+						<table class="navBarIcons">
+							<tr>
+								<td class="tooltip">
+									<i class="material-icons md-light md-36">message</i>
+									<span class="tooltiptext">Message</span>
+								</td>
+								<td class="tooltip">
+										<i class="material-icons md-light md-36">notification_important</i>
+										<span class="tooltiptext">Notifications</span>
+								</td>
+				        <td class="tooltip">
+				          <a href="{% url 'basicapp:accountInfo' %}">
+										<i class="material-icons md-light md-36">sentiment_very_satisfied</i>
+										<span class="tooltiptext">Account</span>
+									</a>
+				        </td>
+								<td class="tooltip">
+				          <a href="{% url 'basicapp:logout' %}">
+										<i class="material-icons md-light md-36 lime ">toggle_on</i>
+										<span class="tooltiptext">Logout</span>
+									</a>
+				        </td>
+							</tr>
+						</table>
+					</td>
+	      </tr>
+			</table>
+		</nav>
+
+		<!-- NavBar ends -->
+
+		<!-- Container (Envelope) -->
+		<div class="myContainer">
+			<!-- Left Section -->
+		<div class="left">
+			<!-- Profile Card -->
+			<br>
+      <br>
+			<center>
+			<div class="profileBlock">
+
+				<!-- Blue Color -->
+				<div style="width:100%;height:25%;background-color: #212E4C;">
+
+				</div>
+				<!-- Blue Color ends -->
+				<center>
+					<div class="profileImageBlock">
+						<img src="{% static 'Images/defaultProfile.jpg' %}" class="profileImage">
+					</div>
+					<div class="profileBlockUsername">
+						{% for user in user_record %}
+              {{ user.first_name }} {{user.last_name}}
+					</div>
+					<div class="profileBlockInstituteName">
+        		<b>@ {{ user.institute_name_user }}</b>
+					</div>
+					<hr>
+					<div class="profileBlockOtherDetails">
+  					  <span style="color: green">Username - <span class="loggedInUsername">{{ user.user_name }}</span></span>
+							<br>
+							<span>Dob - {{ user.dob }}</span>
+							<br>
+							{% if user.access_type == 'NormalUser' %}
+							<span style="font-size:0.8em">Status:- Normal User</span>
+							{% elif user.access_type == 'InstituteAdmin' %}
+							<span style="font-size:0.8em">Status:- Institute Admin</span>
+							{% elif user.access_type == 'SuperAdmin' %}
+							<span style="font-size:0.8em">Status:- Super Admin</span>
+							{% else %}
+							<span style="font-size:0.5em">Status:- not found</span>
+							{% endif %}
+            {% endfor %}
+					</div>
+				</center>
+			</div>
+			<!-- Profile Card end -->
+			</center>
+    <br>
+    <br>
+			<!-- Other Contents -->
+			<center>
+			<div class="leftContentsBlock">
+				<table style="height: 100%; width: 100%; border:0px solid red; border-spacing: 8px 8px;">
+					<tr class="leftContent">
+						<td><a href="{% url 'basicapp:internships' %}">Internships</a></td>
+					</tr>
+					<tr class="leftContent">
+						<td><a href="{% url 'basicapp:scholarships' %}">Scholarships</a></td>
+					</tr>
+					<tr class="leftContent">
+						<td><a href="{% url 'basicapp:programmes' %}">Programmes</a></td>
+					</tr>
+				</table>
+			</div>
+		</center>
+			<!-- Other Contents ends -->
+		</div>
+		<!-- Left Section Ends -->
+
+		<!-- Middle Section -->
+		<div class="middle">
+			<ul style="list-style-type: none;padding-left: 0px;padding:2px;">
+				<br>
+				<!-- NewsFeed Update -->
+				<li>
+					<div style="width:100%;padding:10px;border: 0px solid black;background-color: white;box-shadow: 0px 0px 0px 0px;">
+						<div onsubmit="">
+							Add new status
+							<textarea  id="updateStatusInput" value="tetx"style="width:100%" placeholder="COntent"></textarea>
+							<br><br>
+							<select id="newsfeed_type">
+    						<option value="intership">Internship</option>
+			  				<option value="scholarship">Scholarship</option>
+			  				<option value="programmes">Programmes</option>
+			  				<option value="other">Others</option>
+  						</select>
+							<select id="intended_for">
+    						<option value="students">Students</option>
+			  				<option value="faculty_and_professors">Faculty/Professors</option>
+			  				<option value="all">All</option>
+  						</select>
+							<input type="file" id="image" value="Upload Image">
+							<button type="button" onclick="updateStatus();">Update Status</button>
+						</div>
+						<p id="newsfeedUpdateMessage"></p>
+					</div>
+					<br>
+				</li>
+				<!-- NewsFeed Update ends -->
+				<li>
+					<p id="display">
+					</p>
+				</li>
+				<br><hr>
+
+
+			</ul>
+			<!-- Load More -->
+			<div class="loadMoreBlock">
+				Load more stories
+			</div>
+			<!-- Load More ends -->
+		</div>
+		<!-- Middle Section ends -->
+
+		<!-- Right Section -->
+		<div class="right">
+			<br>
+      <br>
+			<div class="rightContent">
+				<!-- Search Bar -->
+			<div class="rightSearchBlock">
+				<input type="text" placeholder="Search" id="rightSearchBlockInputId" class="rightSearchBlockInput" onkeyup="searchKeyword(this.value)">
+				<i class="material-icons md-36 rightSearchBlockButton">search</i>
+			</div>
+			<div id="searchResults">
+
+			</div>
+			<br><br>
+			<!-- Search bar ends -->
+
+			<!-- Messages Block -->
+			<div class="messagesBlock" style="padding:5px;">
+				<div class="messagesHeader" style="font-family:arial; background-color:#212E4C; Color: white; text-align:center;">
+					{% for user in user_record %}
+					Feed from {{ user.institute_name_user }}
+					{% endfor %}
+				</div>
+				<div class="feedHeadlines">
+					<ul>
+						<li>headline one</li>
+						<li>headline two</li>
+					</ul>
+				</div>
+			</div>
+
+			<!-- Messages Block ends -->
+			</div>
+		</div>
+		<!-- Right Section ends -->
+
+		<!-- Right Section Overlapping 1 -->
+		<div class="overlappingBlock">
+			<div class="overlappingBlockContent" style="display:none;">
+				<div class="overlappingBlockHeader" onclick="closeRightVerticalNavbar()">
+					Back
+				</div>
+
+			</div>
+
+		</div>
+		<!-- Right Section Overlapping 1 ends -->
+		</div>
+		<!-- Container (Envelope) ends -->
+		<!-- To get access to User interests -->
+		<div class="user_interests" style="display:none;">
+			User Interest:
+			{% for user_interest in user_interests %}
+				<p class="user_interest">{{ user_interest }}</p>
+			{% endfor %}
+		</div>
+	</body>
+	<script>
+	function searchKeyword(value){
+		displayBlock = document.getElementById('searchResults');
+		if(value.length == 0)
+		{
+			displayBlock.innerHTML = '';
+			return;
+		}
+		console.log('making request');
+		$.ajax({
+			type:'GET',
+			url:"{% url 'basicapp:searchKeyword'%}",
+			data:{keyword:value},
+			success: function(msg){
+				console.log('res ' + msg['result']);
+				displayBlock.innerHTML = msg['result'];
+			}
+		});
+	}
+	function addComment(id){
+		value_id = 'addComment_'+id;
+		comment_description = document.getElementById(value_id).value;
+	 	if( comment_description.length == 0) return;
+		newsfeed_id = id;
+		var username = document.getElementsByClassName("loggedInUsername")[0].innerHTML; // User name of current logged in user
+		$.ajax({
+         type: "GET",
+         url: "{% url 'basicapp:addComment' %}",
+         data: {id:newsfeed_id,comment:comment_description,username:username},
+         success: function(msg){
+                     msg = msg["message"];
+										 // if(msg != "working") return;
+										 id = 'commentBlock' + id;
+										 msg = '<b>'+username+'</b> '+ comment_description + '<br>';
+										 pre_content = document.getElementById(id).innerHTML;
+										 if(pre_content.length == 0) msg = 'Comments:<br>' + msg;
+										 id = '#'+id;
+										 $(id).append(msg);
+                  }
+    });
+	}
+
+
+	function updateStatus(){
+		inputContent = document.getElementById('updateStatusInput').value;
+		if(inputContent.length == 0) return;
+		newsfeedType = document.getElementById('newsfeed_type').value;
+		newsfeedIntendedFor = document.getElementById('intended_for').value;
+		newsfeedImage = document.getElementById('image').value;
+		// Split Image
+		// C:\fakepath\
+		newsfeedImage = newsfeedImage.split("\\");
+		newsfeedImage = newsfeedImage[newsfeedImage.length-1];
+		$.ajax({
+			type:'POST',
+			url:"{% url 'basicapp:addnewsfeed'%}",
+			data:{inputContent:inputContent,type:newsfeedType,intended_for:newsfeedIntendedFor,image:newsfeedImage},
+			success:function(msg){
+				if(msg['status'] == 'true')
+				{
+					$("#newsfeedUpdateMessage").append('updated');
+				}
+				else
+				{
+					$("#newsfeedUpdateMessage").append('Error updating');
+				}
+
+			}
+		});
+	}
+	$(document).ready(function(){
+	  // $("button").click(function(){
+		var user_interests_json = document.getElementsByClassName("user_interest");
+		var length = user_interests_json.length;
+		var user_interests = [];
+		for (var i = 0; i<length; i++){
+			user_interests.push(user_interests_json[i].innerHTML);
+		}
+	    $.ajax({
+	      url:"{% url 'basicapp:loadNewsFeed'%}",
+	      success:function(html){
+	        displayNewsFeed(html);
+	      },
+	    });
+	  //   // Ajax call ends here
+	  // });
+	  // Button click ends here
+	  function displayNewsFeed(data){
+	    // Get number of newsfeeds
+	    var len = Number(data["length"]);
+			var recommend = '';
+			var others = '<span id="otherNewsFeed">';
+	    for(var i=0; i<len; i++)
+	    {
+				img_path = data[String(i)]["image"];
+				user_name = data[String(i)]["user_name"];
+				news_feed_type = data[String(i)]["news_feed_type"];
+				date = data[String(i)]["date"];
+				description = data[String(i)]["description"];
+				id = data[String(i)]["id"];
+				var flag = false;
+				str = '';
+				// Starting from 273
+	      str = '<div class="newsfeedContent"><div class="contentHeader"><div class="newsfeedUserDetail" style="width:100%;background-color:white"><div class="newsfeedUploadedByImage">';
+				str += '<img src="{% static 'Images/defaultProfile.jpg' %}" style="width:70px;height:70px;"></div>';
+				str += '<span class="newsfeedUploadedBy">' + user_name + '<br></span>';
+				str += '<span class="newsfeedUploadedByInstituteName"><span style="color:black">' + news_feed_type + '</span> category</span><br>';
+				str += '<span class="newsfeedContentUploadDate"><span style="color:black">' + date.substr(0,10) + ' </span>at <span style="color:black">' + date.substr(11,5) + '</span></span>';
+				str += '</div></div><hr>';
+				// Description image code is skipped Line-269 to 271
+				str += '<div class="newsfeedContentCaptionBlock"><div class="newsfeedContentCaption"><span style="font-weight:Normal; Color:grey"><b>for your interest: </b><span style="font-size:0.8em">';
+				// for your interest skipped
+				// Implementing for your interest
+					for(var j =0; j<user_interests.length; j++)
+					{
+						if(data[String(i)]["score"][user_interests[j]]> 0.85 )
+						{
+							// str += data[String(i)]["score"][user_interests[j]];
+							str += user_interests[j] + ', ';
+							if(!flag && data[String(i)]["score"][user_interests[j]]> 0.95){
+								flag = true;
+							}
+						}
+					}
+				// Implementing for your interest ends
+				str += '</span></span><br>';
+				str += description;
+				str+='</div><hr>'
+				// upto line 278
+				str += '</div><span id = "commentBlock' + id + '" >';
+				// To add new comment
+				str += '<input style="width: 75%;" type="text" placeholder="add comments" id="addComment_' + id + '">';
+				// str += '<button onclick="addComment('+ id + ')">Add comment</button><br><br>';
+				str += '<button style="width: 23%; margin-left: 2%;" onclick="addComment('+id+')" >post comment</button><br>';
+				// comments
+				comment_length = Number(data[String(i)]['comments_length']);
+				comment = '<span style="color:grey"><b>comments </span><span style="color:grey; font-size:0.8em;">' + comment_length + ':</span></b><br>';
+				for(var j=0; j<comment_length; j++)
+				{
+						comment += '<div style="margin: 8px 0px">'
+						comment_date = data[String(i)]['comments'][String(j)]['created_date'];
+						comment += '<b>'+data[String(i)]['comments'][String(j)]['user_name'] +'</b>';
+						comment += '<span style="color:grey;"> on </span>' + comment_date.substr(0, 10) + '<span style="color: grey;"> at </span>' + comment_date.substr(11, 5) + '<br>';
+						comment += '&nbsp; &nbsp;' + data[String(i)]['comments'][String(j)]['description'];
+						comment += '<br></div>';
+						str += comment;
+						comment = '';
+				}
+				str += '</span><br></div><br>';
+				if(flag == true )
+				{
+					recommend += str;
+				}
+				else
+				{
+					others += str;
+				}
+	    }
+			others += '</span>';
+			$("#display").append(recommend + '<br>Others<br>'+others);
+	  }
+	});
+	</script>
+</html>

@@ -29,7 +29,7 @@ class addNewsFeedForm(forms.ModelForm):
         model = Newsfeed
         fields = {'description', 'news_feed_type'}
 
-class CommentForm(forms.ModelForm):
-    class Meta:
-        model = Comment
-        fields = {'user_name', 'description',}
+class uploadProfilePic(forms.Form):
+    imageFile = forms.ImageField(
+        label = 'select a file'
+    )

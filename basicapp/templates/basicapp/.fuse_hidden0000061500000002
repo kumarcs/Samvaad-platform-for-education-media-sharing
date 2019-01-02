@@ -1,0 +1,236 @@
+{% load staticfiles %}
+<html>
+<title>
+	User Profile Page
+</title>
+	<link href="{% static 'css/UserProfilePage.css' %}" rel="stylesheet">
+	<script src="{% static 'js/UserProfilePage.js' %}" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<body style="margin: 0px;background-color: WhiteSmoke">
+	<!-- NavBar -->
+		<nav class="navbarBody">
+			<span style="color: white;font-size: 2em;">SANVAD</span>
+			<ul class="listBody">
+				<li class="list">
+					<a href="{% url 'basicapp:index' %}"><button class="navbarButton">
+						<img src="{% static 'Images/home3.png' %}" class="navBarIcon">
+						<br>
+						Home
+					</button></a>
+				</li>
+
+			</ul>
+		</nav>
+
+		<!-- NavBar ends -->
+	<!-- Container -->
+	<div class="myContainer">
+		<!-- Left Section -->
+		<div class="leftBody">
+			<br>
+			<ul class="leftBodyUl">
+				<li class="leftBodyUlLi" onclick="loadUserProfile()" style="background-color: lightgrey;">
+					User Profile
+				</li>
+				<hr>
+				<li class="leftBodyUlLi" onclick="loadModifyUser()">
+					Modify Profile
+				</li>
+				<li class="leftBodyUlLi" onclick="loadChangePassword()">
+					Change Password
+				</li>
+			</ul>
+		</div>
+		<!-- Left Section ends -->
+		<!-- Middle Section -->
+		<div class="middleBody">
+			<br><br>
+			<!-- Institute Profile -->
+			<div class="userProfile" >
+				<table style="border:0px solid black;width:100%">
+					<tr>
+						<td style="width:25%;">Username:</td>
+						<td><input type="text" value="{{request.user.username}}" readonly id="username"></td>
+					</tr>
+					<tr>
+						<td style="width:25%;">Profile Pic:</td>
+						<td>
+							<br>
+								<!-- Image Link : User Profile Pic -->
+								<img src="{% static 'Images/maleIcon.png' %}" style="width:100px;height:100px;">
+								<br>
+								<br>
+						</td>
+					</tr>
+					<tr>
+						<td style="width:25%;">Projects:</td>
+						<td>
+							<ol>
+								{% for project in projects %}
+								<li> <h3> <input type="text" value="{{project.user_name}}" id="projectUsername{{project.pk}}" readonly></h3> </li>
+								<input type="text" value="{{project.status}}" id="projectStatus{{project.pk}}" readonly>
+								<br>
+								<input type="text" value="{{project.info}}" id="projectInfo{{project.pk}}" readonly>
+								<br>
+								<input type="text" value="{{project.category}}" id="projectCategory{{project.pk}}" readonly>
+                <br>
+								<input type="text" value="{{project.upload_date}}" id="projectUploadDate{{project.pk}}" readonly>
+								<br>
+								<input type="text" value="{{project.expir_date}}" id="projectExpiryDate{{project.pk}}" readonly>
+								<br>
+								<input type="text" value="{{project.description}}" id="projectDescription{{project.pk}}" readonly>
+								<br>
+								<button onclick="editProject({{project.pk}})">Edit</button>
+								<button onclick="deleteProject({{project.pk}})">Delete</button>
+								<button onclick="saveProject({{project.pk}})">Save</button>
+								{% empty %}
+								<p>No Projects yet :)</p>
+								{% endfor %}
+							</ol>
+						</td>
+					</tr>
+					<tr>
+						<td style="width:25%;">Internships:</td>
+						<td>
+							<ol>
+
+								{% for internship in internships %}
+
+								<li><h2><input type="text" id="internshipUsername{{internship.pk}}" value="{{internship.user_name}}" readonly></h2></li>
+									<input type="text" id="internshipStatus{{internship.pk}}" value="{{internship.status}}" readonly>
+									<br>
+									<input type="text" id="internshipInfo{{internship.pk}}" value="{{internship.info}}" readonly>
+									<br>
+									<input type="text" id="internshipCategory{{internship.pk}}" value="{{internship.category}}" readonly>
+									<br>
+									<input type="text" id="internshipUploadDate{{internship.pk}}" value="{{internship.upload_date}}" readonly>
+									<br>
+									<input type="text" id="internshipExpiryDate{{internship.pk}}" value="{{internship.expir_date}}" readonly>
+									<br>
+									<input type="text" id="internshipDescription{{internship.pk}}" value="{{internship.description}}" readonly>
+									{% empty %}
+									<p>No Internships yet :)</p>
+								{% endfor %}
+								</ol>
+						</td>
+					</tr>
+					<tr>
+						<td style="width:25%;">Interests:</td>
+						<td>
+							<ul id="interestList">
+								{% for interest in interests %}
+
+								<li id="interestList{{interest.pk}}"><input type="text" value="{{interest.interest_name}}" readonly>
+									<input type="button" onclick="deleteInterest({{interest.id}})" value="Delete">
+								</li>
+
+									<br>
+									{% empty %}
+									<p>No interests yet :)</p>
+								{% endfor %}
+							</ul>
+						</td>
+						<td>
+							<input type="text" id="newUserInterest">
+							<button onclick="addNewInterest()">Add Interest</button>
+					</td>
+					</tr>
+				</table>
+			</div>
+			<!-- Institute Profile ends -->
+			<!-- Modify User -->
+			<div class="modifyUserBlock" style="display:none">
+				<form>
+					<table style="width:100%;">
+						<tr>
+							<td style="width:25%">Username:</td>
+							<td><input type="text" placeholder="Username" style="width:74%;height:35px;font-size:15px;"></td>
+						</tr>
+						<tr>
+							<td style="width:25%">User Profile Pic:</td>
+							<td><input type="file" accept="image/*" style="width:74%;height:35px;font-size:15px;"></td>
+						</tr>
+						<tr>
+							<td style="width:25%">Add description:</td>
+							<td style="width:74%">
+								<textarea></textarea>
+							</td>
+						</tr>
+					</table>
+					<br><br>
+								<input type="button" value="Update" style="width:40%;background-color:lightgreen">
+				</form>
+				</div>
+			<!-- Modify Institute end -->
+			<!-- Change Password -->
+			<div class="changePasswordBlock">
+				<table>
+					<tr>
+						<td>Current Password:</td>
+						<td><input type="password" placeholder="Current Password"></td>
+					</tr>
+					<tr>
+						<td>New Password:</td>
+						<td><input type="password" placeholder="New Password"></td>
+					</tr>
+					<tr>
+						<td>
+							<input type="button" value="Update">
+						</td>
+					</tr>
+				</table>
+			</div>
+			<!-- Change Password ends -->
+		</div>
+		<!-- Middle Section ends -->
+	</div>
+	<!-- Container ends -->
+	<!-- Footer  -->
+		<div class="footer">
+			<br>
+			<center>
+				Developed by: <b>TEAM TRIANGULATION</b>
+			</center>
+		</div>
+		<!-- Footer ends -->
+</body>
+
+<script>
+function deleteInterest(id){
+	console.log('ASA');
+	$.ajax({
+		type:'POST',
+		url:"{% url 'basicapp:deleteUserInterest'%}",
+		data:{id:id},
+		success:function(msg){
+			console.log('res');
+			if(msg['status'] == 'true'){
+				child_list = '#interestList'+id;
+				$(child_list).remove();
+			}
+		}
+	});
+}
+function addNewInterest()
+{
+	interest_name = document.getElementById('newUserInterest').value;
+	$.ajax({
+		type:'POST',
+		url:"{% url 'basicapp:addUserNewInterest' %}",
+		data:{interest:interest_name},
+		success:function(msg){
+			if(msg['status'] == 'false')
+				{
+					alert(msg['message']);
+					return;
+				}
+			parent = '#interestList';
+			id = msg['id'];
+			value = "<li id='interestList"+id+"'><input type='text' value='"+interest_name+"' readonly>";
+			value += "<input type='button' onclick='deleteInterest("+id+")' value='Delete'></li>";
+			$(parent).append(value);
+		}
+	});
+}
+</script>
+</html>
