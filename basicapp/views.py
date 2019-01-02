@@ -8,10 +8,9 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from basicapp.models import (User_Table, Newsfeed, Institute, Internship,
+from basicapp.models import (General_User_Table, Newsfeed, Institute, Internship,
                             Project, Interest, User_Interest, NewsfeedScore, Comment)
-from django.db.models import Q
-from basicapp.forms import UserForm, UserProfileInfoForm, InstituteProfileInfoForm, addUserForm, addNewsFeedForm
+from basicapp.forms import UserForm, InstituteProfileInfoForm, addUserForm, addNewsFeedForm, uploadProfilePicForm
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import (View, TemplateView,
@@ -43,14 +42,12 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                print('Loginned ')
-                n1 = User_Table.objects.filter(user_name__username__icontains=username)
-                print(n1[0].access_type)
-            if n1[0].access_type == 'InstituteAdmin':
+                n1 = General_User_Table.objects.filter(user_name__username__icontains=username)
+            if n1[0].access_type == 'Institute_Admin':
                 return HttpResponseRedirect(reverse('instituteAdmin'))
-            elif n1[0].access_type == 'SuperAdmin':
+            elif n1[0].access_type == 'Super_Admin':
                 return HttpResponseRedirect(reverse('superAdmin'))
-            elif n1[0].access_type == 'NormalUser':
+            elif n1[0].access_type == 'Normal_User':
                 return HttpResponseRedirect(reverse('index'))
             else:
                 return HttpResponse("Account not active")
@@ -72,8 +69,7 @@ def index(request):
         user_interests.append(n.interest_name)
 
     n2= Newsfeed.objects.all()
-    n1 = User_Table.objects.filter(user_name__username__icontains=request.user.username)
-    print(user_interests[0])
+    n1 = General_User_Table.objects.filter(user_name__username__icontains=request.user.username)
     return render(request, 'basicapp/index.html', {'user_interests':user_interests,'user_record':n1})
 
 @login_required
@@ -87,7 +83,7 @@ def superAdmin(request):
 
     if request.method == 'POST':
         user_form = UserForm(data = request.POST)
-        profile_form = UserProfileInfoForm(data = request.POST)
+        # profile_form = UserProfileInfoForm(data = request.POST)
         institute_form = InstituteProfileInfoForm(data = request.POST)
 
         if user_form.is_valid() and profile_form.is_valid():
@@ -108,7 +104,7 @@ def superAdmin(request):
             print(user_form.errors, profile_form.errors)
     else:
         user_form = UserForm()
-        profile_form = UserProfileInfoForm()
+        # profile_form = UserProfileInfoForm()
         institute_form = InstituteProfileInfoForm()
 
     return render(request, 'basicapp/superAdmin.html', {'user_form':user_form, 'profile_form':profile_form, 'institute_form': institute_form})
@@ -125,8 +121,10 @@ def addUser(request):
 
             profile = add_user_form.save(commit=False)
             profile.user_name = user
-            profile.access_type = 'NormalUser'
+            profile.access_type = 'Normal_User'
             profile.save()
+
+            # add code for putting details into general user table and Normal user table
 
         else:
             print(user_form.errors, add_user_form.errors)
@@ -136,60 +134,6 @@ def addUser(request):
 
     return render(request, 'basicapp/adduser.html', {'user_form':user_form, 'add_user_form':add_user_form})
 
-def addNewsFeeds(request):
-    print('here')
-    n1 = User_Table.objects.filter(user_name__username__icontains=request.user.username)
-    data = {}
-    if request.method == 'POST':
-        print('inside POST')
-        add_news_feed = addNewsFeedForm(data = request.POST)
-        if add_news_feed.is_valid():
-            # news_feed = add_news_feed.save(commit=False)
-            # news_feed.user_name = request.user.username
-            # news_feed.save()
-        # newsfeed_object = Newsfeed()
-        # newsfeed_object.user_name = request.user.username
-        # newsfeed_object.news_feed_type request.POST.get('')
-        # newsfeed_object.description
-        # newsfeed_object.image
-        # newsfeed_object.intended_for
-            category = { "Sports":['Cricket', 'Football', 'Soccer', 'Swimming', 'Horse Riding', 'Table Tennis', 'Badminton'], 'Artificial Intelligence':['Machine Learning', 'Deep Learning', 'Mimic', 'Linear Regression', 'Logistic Regression'], 'Internet of Things': ['Automation', 'Alexa', 'Siri', 'Google Home'], 'Data Structure and Algorithms':['DFS', 'BFS', 'Array', 'Stacks', 'Queues', 'Recursion', 'Disjoint Set'], 'Competitive Programming':['Codechef', 'Hackerearth', 'Hackerrank', 'Purple'],
-            'Management':['Event', 'Time'], 'Developer':['Software Engineering', 'Project', 'APIs', 'Web Development'], 'Blockchain':['Cryptocurrency', 'Bitcoins', 'Etherium'], 'Operting System':[], 'Art':[], 'Gaming':[], 'Virtual Reality':[], 'Microprocessors':[], 'Aviation':[], 'Mechanical Engineering':[], 'Electronics Engineering':[], 'Textile Engineering':[], 'Mining Engineering':[]}
-
-            api_scores = paralleldots.custom_classifier(request.POST.get('description'), category);
-            for api_score in api_scores['taxonomy']:
-                tag = api_score['tag']
-                score = api_score['confidence_score']
-                score_table = NewsfeedScore()
-                score_table.newsfeed = news_feed
-                score_table.category = tag
-                score_table.score = score
-                score_table.save()
-
-            return index(request)
-        else:
-            print(news_feed.errors)
-    else:
-        add_news_feed_form = addNewsFeedForm()
-
-    print('here after')
-    return render(request, 'basicapp/addnewsfeed.html', {'add_news_feed_form':add_news_feed_form,'user_record':n1})
-
-#will do later for handling interest of user inputted by user itself
-# added on 24_DEC
-@csrf_exempt
-def addUserInterest(request):
-    template = loader.get_template('basicapp/addUserInterest.html')
-    if request.method == 'GET':
-        return HttpResponse(template.render())
-    else:
-        input_username = User.objects.get(id=request.user.id)
-        input_interest = request.POST.get('user_interest')
-        user_interest = User_Interest()
-        user_interest.user_name = input_username
-        user_interest.interest_name = input_interest
-        user_interest.save()
-        return HttpResponse("interest added")
 
 class NewsFeedDetail(DetailView):
     context_object_name= 'newsfeed_detail'
@@ -200,7 +144,8 @@ def userAccountInfo(request):
     n1 = Internship.objects.filter(user_name__username__icontains = request.user.username)
     n2 = Project.objects.filter(user_name__username__icontains = request.user.username)
     n3 = User_Interest.objects.filter(user_name__username__icontains = request.user.username)
-    return render(request, 'basicapp/UserProfilePage.html', {'internships': n1, 'projects': n2, 'interests': n3})
+    updateProfilePicForm = uploadProfilePicForm()
+    return render(request, 'basicapp/UserProfilePage.html', {'internships': n1, 'projects': n2, 'interests': n3, 'updateProfilePicForm': updateProfilePicForm})
 
 @login_required
 def instituteprofilepage(request):
@@ -228,18 +173,6 @@ def programmes(request):
     feed = Newsfeed.objects.filter(news_feed_type__exact = 'programmes')
     return render(request, 'basicapp/UserExtras.html', {'feed':feed})
 
-def add_comment_to_post(request, pk):
-    post = Newsfeed.objects.get(pk = pk)
-    if request.method == "POST":
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit = False)
-            comment.post=post
-            comment.save()
-            return redirect('detail', pk=post.pk)
-    else:
-        form = CommentForm()
-    return render(request, 'basicapp/add_comment_to_post.html', {'form': form})
 
 @login_required
 @csrf_protect
@@ -382,3 +315,25 @@ def searchKeyword(request):
     data = {}
     data['result'] = htmlCode
     return JsonResponse(data)
+
+@csrf_exempt
+@login_required
+def updateProfilePic(request):
+    if request.method == 'POST':
+        print('inside post method')
+        form = uploadProfilePicForm(request.POST, request.FILES)
+        print(request.FILES['imageFile'])
+        if form.is_valid():
+             userInstance = User_Table.objects.filter(user_name__username__icontains = request.user.username)
+             userInstance.update(profile_pic_path = request.FILES['imageFile'])
+             print(userInstance)
+             if userInstance[0].access_type == 'InstituteAdmin':
+                 return HttpResponseRedirect(reverse('instituteAdmin'))
+             elif userInstance[0].access_type == 'SuperAdmin':
+                 return HttpResponseRedirect(reverse('superAdmin'))
+             elif userInstance[0].access_type == 'NormalUser':
+                 return HttpResponseRedirect(reverse('index'))
+             else:
+                 return HttpResponse("Account not active")
+        else:
+            return HttpResponse("Form not valid")

@@ -1,7 +1,7 @@
 from django import forms
 from django.core import validators
 from django.contrib.auth.models import User
-from basicapp.models import User_Table, Institute, Newsfeed,Comment
+from basicapp.models import Normal_User_Table, Institute, Newsfeed,Comment
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget = forms.PasswordInput())
@@ -9,10 +9,10 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('username', 'email', 'password')
 
-class UserProfileInfoForm(forms.ModelForm):
-    class Meta():
-        model = User_Table
-        fields = ('access_type',)
+# class UserProfileInfoForm(forms.ModelForm):
+#     class Meta():
+#         model = General_User_Table
+#         fields = ('access_typ',)
 
 class InstituteProfileInfoForm(forms.ModelForm):
     class Meta():
@@ -21,15 +21,15 @@ class InstituteProfileInfoForm(forms.ModelForm):
 
 class addUserForm(forms.ModelForm):
     class Meta():
-        model = User_Table
-        fields = {'institute_name_user',}
+        model = Normal_User_Table
+        fields = {'institute_user_name'}
 
 class addNewsFeedForm(forms.ModelForm):
     class Meta():
         model = Newsfeed
         fields = {'description', 'news_feed_type'}
 
-class uploadProfilePic(forms.Form):
+class uploadProfilePicForm(forms.Form):
     imageFile = forms.ImageField(
-        label = 'select a file'
+        label = 'select a image',
     )

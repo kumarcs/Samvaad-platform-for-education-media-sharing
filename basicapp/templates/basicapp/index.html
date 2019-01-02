@@ -76,30 +76,22 @@
 				<!-- Blue Color ends -->
 				<center>
 					<div class="profileImageBlock">
-						<img src="{% static 'Images/defaultProfile.jpg' %}" class="profileImage">
+						{% for user in user_record %}
+						<img src="{{ user.normal_user.profile_pic_path.url }}" class="profileImage">
 					</div>
 					<div class="profileBlockUsername">
-						{% for user in user_record %}
-              {{ user.first_name }} {{user.last_name}}
+              {{ user.normal_user.first_name }} {{user.normal_user.last_name}}
 					</div>
 					<div class="profileBlockInstituteName">
-        		<b>@ {{ user.institute_name_user }}</b>
+        		<b>@ {{ user.normal_user.institute_name_user }}</b>
 					</div>
 					<hr>
 					<div class="profileBlockOtherDetails">
   					  <span style="color: green">Username - <span class="loggedInUsername">{{ user.user_name }}</span></span>
 							<br>
-							<span>Dob - {{ user.dob }}</span>
+							<span>Dob - {{ user.normal_user.dob }}</span>
 							<br>
-							{% if user.access_type == 'NormalUser' %}
 							<span style="font-size:0.8em">Status:- Normal User</span>
-							{% elif user.access_type == 'InstituteAdmin' %}
-							<span style="font-size:0.8em">Status:- Institute Admin</span>
-							{% elif user.access_type == 'SuperAdmin' %}
-							<span style="font-size:0.8em">Status:- Super Admin</span>
-							{% else %}
-							<span style="font-size:0.5em">Status:- not found</span>
-							{% endif %}
             {% endfor %}
 					</div>
 				</center>
@@ -149,7 +141,7 @@
     						<option value="students">Students</option>
 			  				<option value="faculty_and_professors">Faculty/Professors</option>
 			  				<option value="all">All</option>
-  						</select>	
+  						</select>
 							<input type="file" id="image" value="Upload Image">
 							<button type="button" onclick="updateStatus();">Update Status</button>
 						</div>
@@ -185,7 +177,7 @@
 				<i class="material-icons md-36 rightSearchBlockButton">search</i>
 			</div>
 			<div id="searchResults">
-			
+
 			</div>
 			<br><br>
 			<!-- Search bar ends -->
@@ -275,8 +267,8 @@
 
 
 	}
-	
-	
+
+
 	function updateStatus(){
 		inputContent = document.getElementById('updateStatusInput').value;
 		if(inputContent.length == 0) return;
@@ -300,7 +292,7 @@
 				{
 					$("#newsfeedUpdateMessage").append('Error updating');
 				}
-					
+
 			}
 		});
 	}

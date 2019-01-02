@@ -33,8 +33,6 @@ urlpatterns = [
     path('index/addNewsFeed/', views.index, name='addnewsfeed'),
     path('index/<int:pk>/', views.NewsFeedDetail.as_view(),name ='detail'),
     path('accountInfo/', views.userAccountInfo, name='accountInfo'),
-    path('index/<int:pk>/comment/', views.add_comment_to_post, name = 'add_comment_to_post'),
-
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -136,7 +136,7 @@ STATICFILES_DIRS = [
 
 #MEDIA_DIR
 MEDIA_ROOT = MEDIA_DIR
-MEDIA_URL = '/media/'
+MEDIA_URL = '/media/profile_pic/'
 
 
 LOGIN_URL = 'samvad/user_login'

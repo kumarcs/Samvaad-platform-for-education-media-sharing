@@ -140,25 +140,11 @@
 			<!-- Institute Profile ends -->
 			<!-- Modify User -->
 			<div class="modifyUserBlock" style="display:none">
-				<form>
-					<table style="width:100%;">
-						<tr>
-							<td style="width:25%">Username:</td>
-							<td><input type="text" placeholder="Username" style="width:74%;height:35px;font-size:15px;"></td>
-						</tr>
-						<tr>
-							<td style="width:25%">User Profile Pic:</td>
-							<td><input type="file" accept="image/*" style="width:74%;height:35px;font-size:15px;"></td>
-						</tr>
-						<tr>
-							<td style="width:25%">Add description:</td>
-							<td style="width:74%">
-								<textarea></textarea>
-							</td>
-						</tr>
-					</table>
-					<br><br>
-								<input type="button" value="Update" style="width:40%;background-color:lightgreen">
+				<form class="" action="{% url "basicapp:updateProfilePic" %}" method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+					{{updateProfilePicForm.imageFile}}
+					<input type="submit" value="Upload"/>
+
 				</form>
 				</div>
 			<!-- Modify Institute end -->
@@ -234,4 +220,3 @@ function addNewInterest()
 }
 </script>
 </html>
-

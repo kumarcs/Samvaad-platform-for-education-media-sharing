@@ -17,23 +17,22 @@ ACCESS_CATEGORY = (
     ('all', 'All'),
 )
 
-class User_Table(models.Model):
+
+ACCESS_TYPE = (
+    ('normal_user', 'Normal_User'),
+    ('institute_admin', 'Institute_Admin'),
+    ('super_admin', 'Super_Admin'),
+)
+
+class General_User_Table(models.Model):
     user_name = models.OneToOneField(User, on_delete=models.PROTECT)
-    institute_name_user = models.CharField(max_length=100)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    dob = models.CharField(max_length=50)
-    profile_pic_path = models.ImageField(upload_to='profile_pic', default='samvad\media\big.jpg')
-    skill_set = models.CharField(max_length=1000)
-    access_type = models.CharField(max_length=50)
-    status = models.CharField(max_length=50)
+    access_type = models.CharField(max_length=50, choices=ACCESS_TYPE, default='normal_user')
 
     def __str__(self):
         return str(self.user_name)
 
-
 class Institute(models.Model):
-    user_name = models.OneToOneField(User, on_delete=models.PROTECT)
+    institute_user_name = models.ForeignKey('General_User_Table', related_name='institute', on_delete=models.PROTECT, default='N/A')
     institute_name = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
     institute_type = models.CharField(max_length=100)
@@ -43,6 +42,21 @@ class Institute(models.Model):
 
     def __str__(self):
         return str(self.institute_name)
+
+class Normal_User_Table(models.Model):
+    user_name = models.ForeignKey('General_User_Table', related_name='normal_user', on_delete=models.PROTECT)
+    institute_user_name = models.ForeignKey('Institute', related_name='user_institute', on_delete=models.PROTECT, default='N/A')
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    dob = models.CharField(max_length=50)
+    profile_pic_path = models.ImageField(upload_to='profile_pic', default='samvad\media\big.jpg')
+    skill_set = models.CharField(max_length=1000)
+    category = models.CharField(max_length=50, choices=ACCESS_CATEGORY)
+    status = models.CharField(max_length=50)
+
+    def __str__(self):
+        return str(self.user_name)+str(self.institute_user_name)
+
 
 class Newsfeed(models.Model):
     number = models.CharField(max_length=50)
@@ -99,6 +113,9 @@ class Scholarship(models.Model):
     expir_date =  models.CharField(max_length=50)
     description =  models.CharField(max_length=1000)
 
+    def __str__(self):
+        return (str(self.user_name) + " " + str(self.info))
+
 class Internship(models.Model):
     user_name = models.ForeignKey(User,  on_delete=models.PROTECT)
     status =  models.CharField(max_length=50)
@@ -107,6 +124,9 @@ class Internship(models.Model):
     upload_date =  models.CharField(max_length=50)
     expir_date =  models.CharField(max_length=50)
     description =  models.CharField(max_length=1000)
+
+    def __str__(self):
+        return (str(self.user_name) + " " + str(self.info))
 
 class Project(models.Model):
     user_name = models.ForeignKey(User,  on_delete=models.PROTECT)
@@ -117,15 +137,8 @@ class Project(models.Model):
     expir_date =  models.CharField(max_length=50)
     description =  models.CharField(max_length=1000)
 
-
-class FriendRequest(models.Model):
-    sender_user_name = models.CharField(max_length=100)
-    receiver_user_name = models.CharField(max_length=100)
-    status = models.CharField(max_length=1000)
-
-class Friend(models.Model):
-    sender_user_name = models.CharField(max_length=100)
-    receiver_user_name =models.CharField(max_length=100)
+    def __str__(self):
+        return (str(self.user_name) + " " + str(self.info))
 
 class Comment(models.Model):
     post = models.ForeignKey('Newsfeed',  related_name='comments', on_delete=models.PROTECT)
