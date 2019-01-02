@@ -135,9 +135,25 @@
 				<!-- NewsFeed Update -->
 				<li>
 					<div style="width:100%;padding:10px;border: 0px solid black;background-color: white;box-shadow: 0px 0px 0px 0px;">
-            <a href="{% url 'basicapp:addnewsfeed' %}">
-              <button style="width:100%;border:1px solid black;background-color:#212E4C;height:40px;Color:white">Add Status</button>
-            </a>
+						<div onsubmit="">
+							Add new status
+							<textarea  id="updateStatusInput" value="tetx"style="width:100%" placeholder="COntent"></textarea>
+							<br><br>
+							<select id="newsfeed_type">
+    						<option value="intership">Internship</option>
+			  				<option value="scholarship">Scholarship</option>
+			  				<option value="programmes">Programmes</option>
+			  				<option value="other">Others</option>
+  						</select>
+							<select id="intended_for">
+    						<option value="students">Students</option>
+			  				<option value="faculty_and_professors">Faculty/Professors</option>
+			  				<option value="all">All</option>
+  						</select>
+							<input type="file" id="image" value="Upload Image">
+							<button type="button" onclick="updateStatus();">Update Status</button>
+						</div>
+						<p id="newsfeedUpdateMessage"></p>
 					</div>
 					<br>
 				</li>
@@ -165,8 +181,11 @@
 			<div class="rightContent">
 				<!-- Search Bar -->
 			<div class="rightSearchBlock">
-				<input type="text" placeholder="Search" id="rightSearchBlockInputId" class="rightSearchBlockInput">
+				<input type="text" placeholder="Search" id="rightSearchBlockInputId" class="rightSearchBlockInput" onkeyup="searchKeyword(this.value)">
 				<i class="material-icons md-36 rightSearchBlockButton">search</i>
+			</div>
+			<div id="searchResults">
+
 			</div>
 			<br><br>
 			<!-- Search bar ends -->
@@ -213,7 +232,24 @@
 		</div>
 	</body>
 	<script>
-
+	function searchKeyword(value){
+		displayBlock = document.getElementById('searchResults');
+		if(value.length == 0)
+		{
+			displayBlock.innerHTML = '';
+			return;
+		}
+		console.log('making request');
+		$.ajax({
+			type:'GET',
+			url:"{% url 'basicapp:searchKeyword'%}",
+			data:{keyword:value},
+			success: function(msg){
+				console.log('res ' + msg['result']);
+				displayBlock.innerHTML = msg['result'];
+			}
+		});
+	}
 	function addComment(id){
 		value_id = 'addComment_'+id;
 		comment_description = document.getElementById(value_id).value;
@@ -235,22 +271,44 @@
 										 $(id).append(msg);
                   }
     });
-
-
 	}
 
 
+	function updateStatus(){
+		inputContent = document.getElementById('updateStatusInput').value;
+		if(inputContent.length == 0) return;
+		newsfeedType = document.getElementById('newsfeed_type').value;
+		newsfeedIntendedFor = document.getElementById('intended_for').value;
+		newsfeedImage = document.getElementById('image').value;
+		// Split Image
+		// C:\fakepath\
+		newsfeedImage = newsfeedImage.split("\\");
+		newsfeedImage = newsfeedImage[newsfeedImage.length-1];
+		$.ajax({
+			type:'POST',
+			url:"{% url 'basicapp:addnewsfeed'%}",
+			data:{inputContent:inputContent,type:newsfeedType,intended_for:newsfeedIntendedFor,image:newsfeedImage},
+			success:function(msg){
+				if(msg['status'] == 'true')
+				{
+					$("#newsfeedUpdateMessage").append('updated');
+				}
+				else
+				{
+					$("#newsfeedUpdateMessage").append('Error updating');
+				}
+
+			}
+		});
+	}
 	$(document).ready(function(){
 	  // $("button").click(function(){
 		var user_interests_json = document.getElementsByClassName("user_interest");
 		var length = user_interests_json.length;
 		var user_interests = [];
-
 		for (var i = 0; i<length; i++){
 			user_interests.push(user_interests_json[i].innerHTML);
 		}
-
-
 	    $.ajax({
 	      url:"{% url 'basicapp:loadNewsFeed'%}",
 	      success:function(html){
@@ -297,16 +355,13 @@
 							}
 						}
 					}
-
 				// Implementing for your interest ends
 				str += '</span></span><br>';
 				str += description;
 				str+='</div><hr>'
 				// upto line 278
 				str += '</div><span id = "commentBlock' + id + '" >';
-
 				// To add new comment
-
 				str += '<input style="width: 75%;" type="text" placeholder="add comments" id="addComment_' + id + '">';
 				// str += '<button onclick="addComment('+ id + ')">Add comment</button><br><br>';
 				str += '<button style="width: 23%; margin-left: 2%;" onclick="addComment('+id+')" >post comment</button><br>';

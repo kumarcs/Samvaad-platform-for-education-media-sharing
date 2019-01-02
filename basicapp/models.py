@@ -80,7 +80,7 @@ class User_Interest(models.Model):
         unique_together = ("user_name", "interest_name")
 
     def __str__(self):
-        return (str(self.user_name)+"/"+str(self.interest_name))
+        return (str(self.user_name)+"/"+str(self.interest_name) + "/" +str(self.id))
 
 class NewsfeedScore(models.Model):
     newsfeed = models.ForeignKey(Newsfeed, on_delete=models.CASCADE)
