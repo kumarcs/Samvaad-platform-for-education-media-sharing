@@ -43,11 +43,12 @@ def user_login(request):
             if user.is_active:
                 login(request, user)
                 n1 = General_User_Table.objects.filter(user_name__username__icontains=username)
-            if n1[0].access_type == 'Institute_Admin':
+                print(n1[0].access_type)
+            if n1[0].access_type == 'institute_admin':
                 return HttpResponseRedirect(reverse('instituteAdmin'))
-            elif n1[0].access_type == 'Super_Admin':
+            elif n1[0].access_type == 'super_admin':
                 return HttpResponseRedirect(reverse('superAdmin'))
-            elif n1[0].access_type == 'Normal_User':
+            elif n1[0].access_type == 'normal_user':
                 return HttpResponseRedirect(reverse('index'))
             else:
                 return HttpResponse("Account not active")
